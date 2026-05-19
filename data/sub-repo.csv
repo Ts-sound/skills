@@ -1,3 +1,4 @@
 repo_name,repo_url,branch,last_commit,added_date,status
 anthropics-skills,https://github.com/anthropics/skills.git,main,6a5bb069,,active
 mattpocock-skills,https://github.com/mattpocock/skills.git,main,67bce91c,,active
+vercel-labs-skills,https://github.com/vercel-labs/skills.git,main,c5ad3a85,,active
