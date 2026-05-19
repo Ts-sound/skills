@@ -29,12 +29,12 @@ def main():
         repo_name = f"{owner}-{url_stem}"
     else:
         repo_name = url_stem
-    path = Path(__file__).resolve().parent.parent / "sources" / repo_name
+    rel_path = f"sources/{repo_name}"
 
     print(f"Adding source: {url}")
-    print(f"Path: {path}")
+    print(f"Path: {rel_path}")
 
-    repo_name, commit = git_clone_submodule(url, path)
+    repo_name, commit = git_clone_submodule(url, rel_path)
     add_repo_csv(repo_name, url, branch, commit, "")
     print(f"Registered {repo_name} in data/sub-repo.csv")
 

@@ -75,6 +75,18 @@ def main():
     for skill in confirmed:
         source_repo = find_source_repo(skill["name"])
         if not source_repo:
+            # Fallback: check if any source has a matching SKILL.md name in frontmatter
+            for source in SOURCES_DIR.iterdir():
+                if not source.is_dir():
+                    continue
+                root_md = source / "SKILL.md"
+                if root_md.exists():
+                    with open(root_md, encoding="utf-8") as f:
+                        content = f.read()
+                    if f"name: {skill['name']}" in content:
+                        source_repo = source
+                        break
+        if not source_repo:
             print(f"Warning: Source repo not found for skill '{skill['name']}'")
             continue
 
@@ -85,6 +97,11 @@ def main():
                 if md.parent.name == skill["name"]:
                     actual_path = str(md.parent.relative_to(source_repo))
                     break
+            # Check root-level SKILL.md
+            if not actual_path and (source_repo / "SKILL.md").exists():
+                with open(source_repo / "SKILL.md", encoding="utf-8") as f:
+                    if f"name: {skill['name']}" in f.read():
+                        actual_path = "."
         if not actual_path:
             print(f"Warning: Skill '{skill['name']}' not found in source '{source_name}'")
             continue

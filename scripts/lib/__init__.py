@@ -100,12 +100,12 @@ def git(*args: str, cwd: Optional[Path] = None) -> str:
     return result.stdout.strip()
 
 
-def git_clone_submodule(url: str, path: Path) -> tuple:
+def git_clone_submodule(url: str, rel_path: str) -> tuple:
     """Add a git submodule and return the repo name and commit."""
-    repo_name = path.name
-    git("submodule", "add", url, str(path))
+    repo_name = rel_path.split("/")[-1]
+    git("submodule", "add", url, rel_path)
     # Get commit
-    commit = git("rev-parse", "HEAD", cwd=path)[:8]
+    commit = git("rev-parse", "HEAD", cwd=ROOT / rel_path)[:8]
     return repo_name, commit
 
 
@@ -133,12 +133,17 @@ def discover_skills(source_dir: Path) -> List[Dict]:
     """Discover all skills in a source directory by recursively finding SKILL.md."""
     skills = []
     skills_dir = source_dir / "skills"
-    if not skills_dir.is_dir():
-        return skills
-    for skill_md in sorted(skills_dir.rglob("SKILL.md")):
+    if skills_dir.is_dir():
+        for skill_md in sorted(skills_dir.rglob("SKILL.md")):
+            info = parse_skill_md(skill_md)
+            info["source_path"] = str(skill_md.parent.relative_to(source_dir))
+            info["dir_name"] = skill_md.parent.name
+            skills.append(info)
+    elif (source_dir / "SKILL.md").exists():
+        skill_md = source_dir / "SKILL.md"
         info = parse_skill_md(skill_md)
-        info["source_path"] = str(skill_md.parent.relative_to(source_dir))
-        info["dir_name"] = skill_md.parent.name
+        info["source_path"] = "."
+        info["dir_name"] = source_dir.name
         skills.append(info)
     return skills
 
@@ -164,7 +169,10 @@ def parse_skill_md(path: Path) -> Dict:
 def copy_skill(source_dir: Path, source_path: str, category: str):
     """Copy a skill from source to skills/<category>/."""
     src = source_dir / source_path
-    skill_name = src.name
+    if source_path == ".":
+        skill_name = source_dir.name
+    else:
+        skill_name = src.name
     dst = SKILLS_DIR / category / skill_name
     if dst.exists():
         import shutil

@@ -1,9 +1,0 @@
-[submodule "/opt/tong/ws/git-repo/skills/sources/anthropics-skills"]
-	path = /opt/tong/ws/git-repo/skills/sources/anthropics-skills
-	url = https://github.com/anthropics/skills.git
-[submodule "/opt/tong/ws/git-repo/skills/sources/mattpocock-skills"]
-	path = /opt/tong/ws/git-repo/skills/sources/mattpocock-skills
-	url = https://github.com/mattpocock/skills.git
-[submodule "/opt/tong/ws/git-repo/skills/sources/vercel-labs-skills"]
-	path = /opt/tong/ws/git-repo/skills/sources/vercel-labs-skills
-	url = https://github.com/vercel-labs/skills.git
