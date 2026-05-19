@@ -3,9 +3,9 @@
 
 - **主要目标**: 建立完整的 Skills 仓库结构和文档体系
 - **成功指标**:
-  - 目录结构完整创建
-  - 核心文档（README、AGENTS.md、设计、需求、决策）齐备且内容一致
-  - 可开始执行第三方 skills 的调研和引入
+    - 目录结构完整创建
+    - 核心文档（README、AGENTS.md、设计、需求、决策）齐备且内容一致
+    - 可开始执行第三方 skills 的调研和引入
 
 ## 范围
 
@@ -133,7 +133,6 @@
 | AC7 | 文档一致性 | requirements.md、design/README.md、AGENTS.md 中的目录结构描述一致 |
 | AC8 | scripts 可用 | scripts/ 中的脚本可执行且输出符合预期 |
 
-
 ## 技术方案
 
 ### 目录结构设计
@@ -194,6 +193,7 @@
 ### 工作流
 
 #### 引入流程
+
 ```
 添加源 → python3 scripts/add_source.py <git-url>
   → sources/ 作为 git submodule 添加
@@ -204,6 +204,7 @@
 ```
 
 #### 更新流程
+
 ```
 检查更新 → python3 scripts/update.py
   → pull sources/ 子模块
