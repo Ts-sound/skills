@@ -130,20 +130,15 @@ def pull_submodule(path: Path) -> bool:
 # --- Skill analysis ---
 
 def discover_skills(source_dir: Path) -> List[Dict]:
-    """Discover all skills in a source directory."""
+    """Discover all skills in a source directory by recursively finding SKILL.md."""
     skills = []
     skills_dir = source_dir / "skills"
     if not skills_dir.is_dir():
         return skills
-    for entry in sorted(skills_dir.iterdir()):
-        if not entry.is_dir():
-            continue
-        skill_md = entry / "SKILL.md"
-        if not skill_md.exists():
-            continue
+    for skill_md in sorted(skills_dir.rglob("SKILL.md")):
         info = parse_skill_md(skill_md)
-        info["source_path"] = str(entry.relative_to(source_dir))
-        info["dir_name"] = entry.name
+        info["source_path"] = str(skill_md.parent.relative_to(source_dir))
+        info["dir_name"] = skill_md.parent.name
         skills.append(info)
     return skills
 
@@ -166,10 +161,11 @@ def parse_skill_md(path: Path) -> Dict:
     return {"name": name, "description": description[:120]}
 
 
-def copy_skill(source_dir: Path, skill_dir_name: str, category: str):
+def copy_skill(source_dir: Path, source_path: str, category: str):
     """Copy a skill from source to skills/<category>/."""
-    src = source_dir / "skills" / skill_dir_name
-    dst = SKILLS_DIR / category / skill_dir_name
+    src = source_dir / source_path
+    skill_name = src.name
+    dst = SKILLS_DIR / category / skill_name
     if dst.exists():
         import shutil
         shutil.rmtree(dst)

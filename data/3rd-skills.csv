@@ -1,2 +1,10 @@
 skill_name,category,source_repo,source_path,imported_date,modified,last_sync,priority
 skill-creator,core,anthropics-skills,skills/skill-creator,2026-05-19,false,2026-05-19,1
+diagnose,engineering,mattpocock-skills,skills/engineering/diagnose,2026-05-19,false,2026-05-19,1
+grill-with-docs,engineering,mattpocock-skills,skills/engineering/grill-with-docs,2026-05-19,false,2026-05-19,1
+to-issues,project-mgmt,mattpocock-skills,skills/engineering/to-issues,2026-05-19,false,2026-05-19,1
+triage,project-mgmt,mattpocock-skills,skills/engineering/triage,2026-05-19,false,2026-05-19,1
+caveman,productivity,mattpocock-skills,skills/productivity/caveman,2026-05-19,false,2026-05-19,1
+grill-me,engineering,mattpocock-skills,skills/productivity/grill-me,2026-05-19,false,2026-05-19,1
+handoff,productivity,mattpocock-skills,skills/productivity/handoff,2026-05-19,false,2026-05-19,1
+write-a-skill,core,mattpocock-skills,skills/productivity/write-a-skill,2026-05-19,false,2026-05-19,1

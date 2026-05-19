@@ -46,6 +46,9 @@ def find_source_repo(skill_name: str) -> Path:
         skill_dir = source / "skills" / skill_name
         if skill_dir.exists():
             return source
+        for md in source.rglob("SKILL.md"):
+            if md.parent.name == skill_name:
+                return source
     return None
 
 
@@ -75,9 +78,24 @@ def main():
             print(f"Warning: Source repo not found for skill '{skill['name']}'")
             continue
 
-        source_path = f"skills/{skill['name']}"
-        add_skill_csv(skill["name"], skill["category"], source_name, source_path)
-        copy_skill(source_repo, skill["name"], skill["category"])
+        # Find actual source_path
+        actual_path = skill.get("source_path", "")
+        if not actual_path:
+            for md in source_repo.rglob("SKILL.md"):
+                if md.parent.name == skill["name"]:
+                    actual_path = str(md.parent.relative_to(source_repo))
+                    break
+        if not actual_path:
+            print(f"Warning: Skill '{skill['name']}' not found in source '{source_name}'")
+            continue
+
+        src = source_repo / actual_path
+        if not src.exists():
+            print(f"Warning: Skill path '{actual_path}' not found in source '{source_name}'")
+            continue
+
+        add_skill_csv(skill["name"], skill["category"], source_name, actual_path)
+        copy_skill(source_repo, actual_path, skill["category"])
         print(f"Imported: {skill['name']} -> skills/{skill['category']}/")
 
     print(f"\n{len(confirmed)} skills imported successfully.")
