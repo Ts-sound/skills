@@ -1,0 +1,3 @@
+[submodule "/opt/tong/ws/git-repo/skills/sources/anthropics-skills"]
+	path = /opt/tong/ws/git-repo/skills/sources/anthropics-skills
+	url = https://github.com/anthropics/skills.git
