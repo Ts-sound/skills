@@ -1,0 +1,12 @@
+[submodule "sources/anthropics-skills"]
+	path = sources/anthropics-skills
+	url = https://github.com/anthropics/skills.git
+[submodule "sources/mattpocock-skills"]
+	path = sources/mattpocock-skills
+	url = https://github.com/mattpocock/skills.git
+[submodule "sources/vercel-labs-skills"]
+	path = sources/vercel-labs-skills
+	url = https://github.com/vercel-labs/skills.git
+[submodule "sources/humanizer-zh"]
+	path = sources/humanizer-zh
+	url = https://github.com/op7418/Humanizer-zh.git
