@@ -23,6 +23,23 @@
     └── reports/      # 调研报告
 ```
 
+## 安装
+
+```bash
+git clone <this-repo> ~/skills-repo
+cd ~/skills-repo
+
+# 链接到 Claude Code
+bash scripts/link-skills.sh --claude
+
+# 或链接到 opencode
+bash scripts/link-skills.sh --opencode
+```
+
+整个 `skills/` 目录作为一个 namespace 链接到目标路径下的 `ts-sound-skills/`。
+使用 symlink 方式，skills 更新后自动同步，无需重新安装。
+`git pull` 后无需重新运行脚本。
+
 ## 工作流
 
 ### 引入第三方 Skills
