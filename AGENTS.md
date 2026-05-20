@@ -29,10 +29,11 @@
 git clone <this-repo> ~/skills-repo
 cd ~/skills-repo
 
-# 链接到 Claude Code
+# 链接到 Claude Code（含 skills + 启动自动激活 caveman）
 bash scripts/link-skills.sh --claude
+python3 scripts/add-caveman-hook.py --claude
 
-# 或链接到 opencode
+# 或链接到 opencode（仅 skills，不含 caveman）
 bash scripts/link-skills.sh --opencode
 ```
 

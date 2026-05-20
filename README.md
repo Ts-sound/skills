@@ -11,7 +11,10 @@ git clone https://github.com/Ts-sound/skills.git ~/skills-repo
 # 2. 链接到 Claude Code（扁平链接，Claude Code 直接可用）
 bash ~/skills-repo/scripts/link-skills.sh --claude
 
-# 3. 更新
+# 3. 配置启动时自动激活 caveman（仅 Claude Code）
+python3 ~/skills-repo/scripts/add-caveman-hook.py --claude
+
+# 4. 更新
 cd ~/skills-repo && git pull
 ```
 
