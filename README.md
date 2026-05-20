@@ -2,7 +2,22 @@
 
 统一管理、引入和更新第三方 skills 的集中式仓库。
 
-## 快速开始
+## 安装使用
+
+```bash
+# 1. Clone 仓库
+git clone https://github.com/Ts-sound/skills.git ~/skills-repo
+
+# 2. 链接到 Claude Code（扁平链接，Claude Code 直接可用）
+bash ~/skills-repo/scripts/link-skills.sh --claude
+
+# 3. 更新
+cd ~/skills-repo && git pull
+```
+
+链接后 `~/.claude/skills/` 下直接是各 skill 目录（扁平结构，与 [mattpocock/skills](https://github.com/mattpocock/skills) 一致）。
+
+## 维护管理
 
 ```bash
 # 添加新源

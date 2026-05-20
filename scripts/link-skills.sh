@@ -1,25 +1,33 @@
-#!/bin/bash
-# link-skills.sh - 将本仓库的 skills 目录链接到 Claude Code / opencode
+#!/usr/bin/env bash
+set -euo pipefail
+
+# link-skills.sh - 将仓库 skills/ 下所有 SKILL.md 扁平链接到 Claude Code / opencode
+# 参照 mattpocock/skills 的扁平结构:
+#   ~/.claude/skills/<skill-name> -> <repo>/skills/<category>/<skill-name>
+#
 # 用法: bash scripts/link-skills.sh [--opencode] [--claude]
 
-set -e
-
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-SKILLS_SRC="$REPO_ROOT/skills"
-
-NAMESPACE="ts-sound-skills"
-DEFAULT_TARGET="$HOME/.claude/skills"
-TARGET="$DEFAULT_TARGET"
+REPO="$(cd "$(dirname "$0")/.." && pwd)"
+SRC="$REPO/skills"
+DEST="$HOME/.claude/skills"
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --opencode) TARGET="$HOME/.config/opencode/skills" ;;
-        --claude)   TARGET="$HOME/.claude/skills" ;;
+        --opencode) DEST="$HOME/.config/opencode/skills" ;;
+        --claude)   DEST="$HOME/.claude/skills" ;;
         --unlink)
-            for t in "$HOME/.claude/skills/$NAMESPACE" "$HOME/.config/opencode/skills/$NAMESPACE"; do
-                if [ -L "$t" ]; then
-                    rm -v "$t"
+            # 删除 ~/.claude/skills/ 和 ~/.config/opencode/skills/ 中指向本仓库的链接
+            for d in "$HOME/.claude/skills" "$HOME/.config/opencode/skills"; do
+                if [ -d "$d" ]; then
+                    for link in "$d"/*/; do
+                        [ -L "$link" ] || continue
+                        resolved="$(readlink -f "$link")"
+                        case "$resolved" in
+                            "$REPO"|"$REPO"/*)
+                                rm -v "$link"
+                                ;;
+                        esac
+                    done
                 fi
             done
             exit 0
@@ -29,10 +37,37 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-mkdir -p "$TARGET"
-LINK_PATH="$TARGET/$NAMESPACE"
+# 防止 ~/.claude/skills 本身是指向本仓库的符号链接
+if [ -L "$DEST" ]; then
+    resolved="$(readlink -f "$DEST")"
+    case "$resolved" in
+        "$REPO"|"$REPO"/*)
+            echo "error: $DEST is a symlink into this repo ($resolved)." >&2
+            echo "Remove it (rm \"$DEST\") and re-run; the script will recreate it as a real dir." >&2
+            exit 1
+            ;;
+    esac
+fi
 
-rm -f "$LINK_PATH" 2>/dev/null || true
-ln -s "$SKILLS_SRC" "$LINK_PATH"
-echo "Linked: $LINK_PATH -> $SKILLS_SRC"
-echo "Skills available at: $LINK_PATH/<category>/<skill>/SKILL.md"
+mkdir -p "$DEST"
+
+# 使用数组避免 subshell 问题（pipe 进 while 会丢失变量）
+skill_dirs=()
+while IFS= read -r -d '' skill_md; do
+    skill_dirs+=("$skill_md")
+done < <(find "$SRC" -name SKILL.md -not -path '*/node_modules/*' -print0)
+
+for skill_md in "${skill_dirs[@]}"; do
+    src="$(dirname "$skill_md")"
+    name="$(basename "$src")"
+    target="$DEST/$name"
+
+    if [ -e "$target" ] && [ ! -L "$target" ]; then
+        rm -rf "$target"
+    fi
+
+    ln -sfn "$src" "$target"
+    echo "  $name -> $src"
+done
+
+echo "Linked ${#skill_dirs[@]} skills to $DEST/"
