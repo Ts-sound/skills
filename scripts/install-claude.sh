@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# link-skills.sh - 将仓库 skills/ 下所有 SKILL.md 扁平链接到 Claude Code / opencode
+# install-claude.sh - 将仓库 skills/ 下所有 SKILL.md 扁平链接到 Claude Code
 # 参照 mattpocock/skills 的扁平结构:
 #   ~/.claude/skills/<skill-name> -> <repo>/skills/<category>/<skill-name>
 #
-# 用法: bash scripts/link-skills.sh [--opencode] [--claude]
+# 用法: bash scripts/install-claude.sh [--unlink]
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 SRC="$REPO/skills"
@@ -13,11 +13,8 @@ DEST="$HOME/.claude/skills"
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --opencode) DEST="$HOME/.config/opencode/skills" ;;
-        --claude)   DEST="$HOME/.claude/skills" ;;
         --unlink)
-            # 删除 ~/.claude/skills/ 和 ~/.config/opencode/skills/ 中指向本仓库的链接
-            for d in "$HOME/.claude/skills" "$HOME/.config/opencode/skills"; do
+            for d in "$HOME/.claude/skills"; do
                 if [ -d "$d" ]; then
                     for link in "$d"/*/; do
                         [ -L "$link" ] || continue
@@ -37,7 +34,6 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-# 防止 ~/.claude/skills 本身是指向本仓库的符号链接
 if [ -L "$DEST" ]; then
     resolved="$(readlink -f "$DEST")"
     case "$resolved" in
@@ -51,7 +47,6 @@ fi
 
 mkdir -p "$DEST"
 
-# 使用数组避免 subshell 问题（pipe 进 while 会丢失变量）
 skill_dirs=()
 while IFS= read -r -d '' skill_md; do
     skill_dirs+=("$skill_md")

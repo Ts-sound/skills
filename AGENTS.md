@@ -30,16 +30,11 @@ git clone <this-repo> ~/skills-repo
 cd ~/skills-repo
 
 # 链接到 Claude Code（含 skills + 启动自动激活 caveman）
-bash scripts/link-skills.sh --claude
+bash scripts/install-claude.sh
 python3 scripts/add-caveman-hook.py --claude
-
-# 或链接到 opencode（仅 skills，不含 caveman）
-bash scripts/link-skills.sh --opencode
 ```
 
-整个 `skills/` 目录作为一个 namespace 链接到目标路径下的 `ts-sound-skills/`。
 使用 symlink 方式，skills 更新后自动同步，无需重新安装。
-`git pull` 后无需重新运行脚本。
 
 ## 工作流
 

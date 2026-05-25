@@ -4,12 +4,14 @@
 
 ## 安装使用
 
+### Claude Code
+
 ```bash
 # 1. Clone 仓库
 git clone https://github.com/Ts-sound/skills.git ~/skills-repo
 
 # 2. 链接到 Claude Code（扁平链接，Claude Code 直接可用）
-bash ~/skills-repo/scripts/link-skills.sh --claude
+bash ~/skills-repo/scripts/install-claude.sh
 
 # 3. 配置启动时自动激活 caveman（仅 Claude Code）
 python3 ~/skills-repo/scripts/add-caveman-hook.py --claude
@@ -19,6 +21,21 @@ cd ~/skills-repo && git pull
 ```
 
 链接后 `~/.claude/skills/` 下直接是各 skill 目录（扁平结构，与 [mattpocock/skills](https://github.com/mattpocock/skills) 一致）。
+
+### OpenCode
+
+```bash
+# 1. Clone 仓库
+git clone https://github.com/Ts-sound/skills.git ~/skills-repo
+
+# 2. 安装为 OpenCode 插件（plugin + skills symlink）
+bash ~/skills-repo/scripts/install-opencode.sh
+
+# 3. 更新
+cd ~/skills-repo && git pull
+```
+
+安装后重启 OpenCode，插件自动加载 skills。卸载：`bash scripts/install-opencode.sh --uninstall`
 
 ## 维护管理
 
