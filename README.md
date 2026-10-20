@@ -55,7 +55,7 @@ python3 scripts/maintain_csv.py list-sources
 
 | 目录 | 说明 |
 |------|------|
-| `skills/` | opencode 扫描目录（6 个分类） |
+| `skills/` | opencode 扫描目录（按分类组织，当前 4 个分类 13 个 skill） |
 | `sources/` | 第三方 git submodule 缓存 |
 | `data/` | CSV 元数据（脚本维护） |
 | `scripts/` | 自动化脚本 |
@@ -74,6 +74,22 @@ python3 scripts/maintain_csv.py list-sources
 
 ## 已引入 Skills
 
+共 13 个，分布在 4 个分类（以 `skills/` 目录实际内容为准，插件会自动扫描并注入说明）。
+
 | Skill | 分类 | 来源 |
 |-------|------|------|
-| skill-creator | core | anthropics/skills |
+| find-skills | core | [vercel-labs/skills](https://github.com/vercel-labs/skills) |
+| on-demand-toolkit | core | 本地编写 |
+| skill-creator | core | [anthropics/skills](https://github.com/anthropics/skills) |
+| write-a-skill | core | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| diagnose | engineering | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| frontend-design | engineering | [anthropics/skills](https://github.com/anthropics/skills) |
+| grill-me | engineering | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| grill-with-docs | engineering | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| caveman | productivity | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| handoff | productivity | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| humanizer-zh | productivity | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) |
+| to-issues | project-mgmt | [mattpocock/skills](https://github.com/mattpocock/skills) |
+| triage | project-mgmt | [mattpocock/skills](https://github.com/mattpocock/skills) |
+
+> `planning/`、`learning/` 分类暂未引入 skill。
