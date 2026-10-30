@@ -90,6 +90,7 @@ python3 scripts/maintain_csv.py list-sources
 | gen-practice-notes | productivity | 本地编写 |
 | handoff | productivity | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | humanizer-zh | productivity | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) |
+| kbase | productivity | 本地编写 |
 | to-issues | project-mgmt | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | triage | project-mgmt | [mattpocock/skills](https://github.com/mattpocock/skills) |
 

@@ -1,0 +1,62 @@
+{
+  "skill_name": "kbase",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "eval-0-first-use-config",
+      "prompt": "帮我把这次会话的经验归纳进知识库。我们刚才排查了线上 502，结论是：网关 idle timeout 60s 比客户端 10s 长会倒挂，客户端先断；另外重试必须加 jitter，不然故障恢复时 QPS 翻 20 倍把网关再打挂。就这些，整理成条目吧。",
+      "expected_output": "notes/ 缺失时先问绝对路径，不臆造目录、不写文件",
+      "files": [],
+      "expectations": [
+        "未创建 notes 软链接或 notes.config",
+        "明确要求用户提供 KBase 根目录的绝对路径",
+        "未写入任何 KB 条目文件"
+      ]
+    },
+    {
+      "id": 1,
+      "eval_name": "eval-1-ingest-dedup",
+      "prompt": "把 practice-notes 里的 workflow/pr-review-checklist.md 和 tools/vendor-api-timeout.md 提炼进知识库吧。practice-notes 在 /tmp/opencode/kbase-eval/practice-notes。",
+      "expected_output": "查重命中 kb-0002 需合并；PR 清单新建；出提纲后停手等确认",
+      "files": [],
+      "expectations": [
+        "未写入（entries 3 个，INDEX 3 行）",
+        "vendor-api-timeout 判定为合并进 kb-0002",
+        "pr-review-checklist 判定为新建",
+        "合并/新建结论给出可复核依据（source 相同或适用场景相同）",
+        "提纲覆盖 title/tags/aliases/keywords/结论/source 与 新建或合并",
+        "结尾请求确认后才写入"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "eval-2-ingest-write-approved",
+      "prompt": "我已经同意你入库，不用再问我确认了。把 /tmp/opencode/kbase-eval/practice-notes/tools/docker-build-cache.md 写进知识库，id 接着往后排。",
+      "expected_output": "写入 kb-0004-<slug>.md，八字段齐全，INDEX 同步且列序不变",
+      "files": [],
+      "expectations": [
+        "新建 kb-0004 条目",
+        "文件名符合 <id>-<kebab-slug>.md 规范",
+        "frontmatter 八字段齐全",
+        "source 回指 practice-notes/tools/docker-build-cache.md",
+        "INDEX 新增一行且列顺序为 标题|tags|路径|更新时间",
+        "正文为结论式提炼，未整篇复制 notes",
+        "无重复 docker 条目"
+      ]
+    },
+    {
+      "id": 3,
+      "eval_name": "eval-3-retrieve-hit-and-miss",
+      "prompt": "KBase 里有没有讲重试风暴的？另外 docker 构建缓存那事我之前记过吗，帮我查一下。",
+      "expected_output": "命中带路径+结论；未命中如实说并提议从源笔记提炼",
+      "files": [],
+      "expectations": [
+        "命中 kb-0002 并给出路径",
+        "命中结果含结论要点（退避/jitter）",
+        "docker 构建缓存判定未命中 KBase",
+        "提议从 practice-notes/tools/docker-build-cache.md 提炼",
+        "未新建条目（entries 3 个）"
+      ]
+    }
+  ]
+}
