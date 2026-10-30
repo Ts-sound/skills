@@ -1,3 +1,7 @@
 *.pyc
 __pycache__/
 .venv/
+
+# kbase 运行时配置：notes 软链接指向用户知识库，notes.config 记录路径
+skills/productivity/kbase/notes
+skills/productivity/kbase/notes.config
