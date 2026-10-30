@@ -37,6 +37,27 @@ cd ~/skills-repo && git pull
 
 安装后重启 OpenCode，插件自动加载 skills。卸载：`bash scripts/install-opencode.sh --uninstall`
 
+### Windows
+
+Windows 下不用 bash 脚本，直接给全局 skills 目录建一个目录联接（junction），指向仓库根目录。`mklink /J` 不需要管理员权限。
+
+```powershell
+# 1. Clone 仓库（Git Bash 或 PowerShell 均可）
+git clone https://github.com/Ts-sound/skills.git "$env:USERPROFILE\skills-repo"
+
+# 2. 建目录联接。目标形如 C:\Users\<用户名>\.agents\skills\skills-tong
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills" | Out-Null
+cmd /c mklink /J "$env:USERPROFILE\.agents\skills\skills-tong" "$env:USERPROFILE\skills-repo"
+
+# 3. 更新（junction 自动跟随，无需重链）
+cd "$env:USERPROFILE\skills-repo"; git pull
+```
+
+- 目标路径按客户端约定替换，例如 `C:\Users\17853\.agents\skills\skills-tong`
+- 仓库保留 `skills/<category>/<name>/SKILL.md` 层级，客户端需支持递归扫描；只认扁平结构的客户端改用 `install-claude.sh`（需 Git Bash）或逐个建联接
+- 符号链接 `New-Item -ItemType SymbolicLink` 需管理员或开启开发者模式，目录联接不需要
+- 删除联接用 `cmd /c rmdir "<路径>"`，不要用 `del`，也不会删到仓库内容
+
 ## 维护管理
 
 ```bash

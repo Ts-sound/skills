@@ -36,6 +36,16 @@ python3 scripts/add-caveman-hook.py --claude
 
 使用 symlink 方式，skills 更新后自动同步，无需重新安装。
 
+Windows 下用目录联接（junction）代替软链接，无需管理员：
+
+```powershell
+git clone <this-repo> "$env:USERPROFILE\skills-repo"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills" | Out-Null
+cmd /c mklink /J "$env:USERPROFILE\.agents\skills\skills-tong" "$env:USERPROFILE\skills-repo"
+```
+
+更新只需 `git pull`，联接自动跟随。目标路径按客户端约定调整，如 `C:\Users\17853\.agents\skills\skills-tong`。
+
 ## 工作流
 
 ### 引入第三方 Skills
