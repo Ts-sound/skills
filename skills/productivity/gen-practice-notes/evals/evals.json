@@ -1,0 +1,26 @@
+{
+  "skill_name": "gen-practice-notes",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "precommit-lint",
+      "prompt": "看看 gen-practice-notes-workspace/iteration-1/eval-0-precommit-lint/prompt.md：用户说“把这次经验沉淀一下吧”，会话里混着真实经验（CI 只跑 PR、缺 --max-warnings=0、lefthook）和噪音（du 输出、版本号升级）。",
+      "expected_output": "输出候选提纲（标题/分类/tags/路径/摘要），过滤掉 du 输出与版本升级噪音，不写入任何文件，结尾请求确认。",
+      "files": []
+    },
+    {
+      "id": 1,
+      "eval_name": "dedup-merge",
+      "prompt": "看看 gen-practice-notes-workspace/iteration-1/eval-1-dedup-merge/prompt.md：已有 docs/practice-notes/tools/vendor-api-timeout.md，新会话补充了网关 idle timeout、POST 不可重试、jitter、重试次数上限。",
+      "expected_output": "先读索引与已有条目，识别主题重叠，给出 合并/新建/跳过 三选一，而不是直接新建重复文件；不写入任何文件。",
+      "files": []
+    },
+    {
+      "id": 2,
+      "eval_name": "noise-filter",
+      "prompt": "看看 gen-practice-notes-workspace/iteration-1/eval-2-noise-filter/prompt.md：会话核心是符号链接覆盖导致配置丢失，夹带命令输出与无关 brew 列表。",
+      "expected_output": "只提取 1-2 条真经验（符号链接覆盖、写配置前备份），剔除命令输出与无关内容，不写入文件，请求确认。",
+      "files": []
+    }
+  ]
+}
