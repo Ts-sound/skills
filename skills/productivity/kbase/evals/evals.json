@@ -10,38 +10,40 @@
       "expectations": [
         "未创建 notes 软链接或 notes.config",
         "明确要求用户提供 KBase 根目录的绝对路径",
-        "未写入任何 KB 条目文件"
+        "未写入任何条目文件"
       ]
     },
     {
       "id": 1,
       "eval_name": "eval-1-ingest-dedup",
       "prompt": "把 practice-notes 里的 workflow/pr-review-checklist.md 和 tools/vendor-api-timeout.md 提炼进知识库吧。practice-notes 在 /tmp/opencode/kbase-eval/practice-notes。",
-      "expected_output": "查重命中 kb-0002 需合并；PR 清单新建；出提纲后停手等确认",
+      "expected_output": "查重命中已有文件则判合并；PR 清单判新建并给出分类目录与序号；出提纲后停手等确认",
       "files": [],
       "expectations": [
-        "未写入（entries 3 个，INDEX 3 行）",
-        "vendor-api-timeout 判定为合并进 kb-0002",
-        "pr-review-checklist 判定为新建",
-        "合并/新建结论给出可复核依据（source 相同或适用场景相同）",
-        "提纲覆盖 title/tags/aliases/keywords/结论/source 与 新建或合并",
+        "未写入任何 .md（分类目录文件数不变，INDEX 不变）",
+        "vendor-api-timeout 判定为合并进已存在的同类条目，而不是新建",
+        "pr-review-checklist 判定为新建，并给出目标路径 notes_<模块>/<NN>.<子类>/<NN>.<名称>.md",
+        "给出的序号是目标目录当前最大序号 +1",
+        "判断依据可复核（同目录已有同主题文件，或模块/子类贴合）",
+        "提纲覆盖 目标路径/序号/新建或合并/标题/结论摘要/溯源笔记",
         "结尾请求确认后才写入"
       ]
     },
     {
       "id": 2,
       "eval_name": "eval-2-ingest-write-approved",
-      "prompt": "我已经同意你入库，不用再问我确认了。把 /tmp/opencode/kbase-eval/practice-notes/tools/docker-build-cache.md 写进知识库，id 接着往后排。",
-      "expected_output": "写入 kb-0004-<slug>.md，八字段齐全，INDEX 同步且列序不变",
+      "prompt": "我已经同意你入库，不用再问我确认了。把 /tmp/opencode/kbase-eval/practice-notes/tools/docker-build-cache.md 写进知识库。",
+      "expected_output": "写入 notes_devops_infra/03.docker/<NN>.xxx.md，无 frontmatter，跑 gen_index.py 后 INDEX 同步",
       "files": [],
       "expectations": [
-        "新建 kb-0004 条目",
-        "文件名符合 <id>-<kebab-slug>.md 规范",
-        "frontmatter 八字段齐全",
-        "source 回指 practice-notes/tools/docker-build-cache.md",
-        "INDEX 新增一行且列顺序为 标题|tags|路径|更新时间",
-        "正文为结论式提炼，未整篇复制 notes",
-        "无重复 docker 条目"
+        "新建一个文件，路径形如 notes_<模块>/<NN>.<子类>/<NN>.<名称>.md",
+        "文件名 <NN>.<名称>.md，无空格，序号为落盘前现取",
+        "不含 YAML frontmatter（文件首行是 # 标题）",
+        "正文第一段是结论，后续章节按操作顺序组织",
+        "写进了 docker 相关子目录而不是 notes_common_assets/99.others",
+        "执行了 notes/scripts/gen_index.py 重建索引",
+        "INDEX 新增行，路径列与文件名一致，列顺序 标题|tags|路径|更新时间",
+        "未在 entries/ 下新增任何文件"
       ]
     },
     {
@@ -51,11 +53,11 @@
       "expected_output": "命中带路径+结论；未命中如实说并提议从源笔记提炼",
       "files": [],
       "expectations": [
-        "命中 kb-0002 并给出路径",
+        "命中重试相关条目并给出相对路径",
         "命中结果含结论要点（退避/jitter）",
-        "docker 构建缓存判定未命中 KBase",
+        "docker 构建缓存判定未命中",
         "提议从 practice-notes/tools/docker-build-cache.md 提炼",
-        "未新建条目（entries 3 个）"
+        "未新建任何文件"
       ]
     }
   ]

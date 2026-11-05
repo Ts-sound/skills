@@ -1,13 +1,13 @@
 ---
 name: kbase
-description: 知识库（KBase）。将对话、文档或 gen-practice-notes 的笔记二次归纳为可检索的知识条目，支持按关键词/标签/别名检索。写入前先查重并反馈提纲，经允许后写入。
+description: 知识库（KBase）。将对话、文档或 gen-practice-notes 的笔记二次归纳为条目，按分类直接写进 notes 分类目录树（notes_devops_infra/06.windows/02.xxx.md 这类格式），索引由 gen_index.py 生成。写入前先查重并反馈提纲，经允许后写入。
 ---
 
 # 知识库（KBase）
 
 ## 定位
-二级提炼：只留结论、要点、适用场景，去上下文，强调可检索、可复用。
-与 gen-practice-notes 分工：notes 保过程，KBase 保结论，source 做桥。
+二级提炼：只留结论、要点、操作，去上下文，强调可检索、可复用。
+与 gen-practice-notes 分工：notes 保过程，KBase 保结论。
 
 ## 何时使用
 - 写入：用户说“归纳到知识库/KBase”“把 notes 提炼进来”“记成知识条目”
@@ -18,73 +18,98 @@ description: 知识库（KBase）。将对话、文档或 gen-practice-notes 的
 - 首次使用：`notes/` 缺失或断链时，询问用户提供 KBase 根目录**绝对路径**，
   校验存在/可写后建软链接，写入 `notes.config`，之后不再询问
 - 断链检测：`[ -L notes ] && [ -e notes ]`；断链则提示重新配置，不自动回退
-- 目录结构：`notes/INDEX.md` + `notes/entries/`
+- 目录结构：`notes/INDEX.md` + 分类目录树（`notes_*` 为独立子仓库，提交各自负责）
+- `notes/entries/` 是历史遗留的旧格式条目，只读不改，不再新增
 
-## INDEX.md 格式
-固定四列，顺序不变：
+## 落盘位置与命名
+条目直接写进分类目录树：
+
+    notes/<模块>/<NN>.<子类>/<NN>.<名称>.md
+
+- 文件名 `<两位序号>.<名称>.md`，名称用中文或通用英文，**不含空格**
+- 序号在**目标目录内**递增：落盘前重列该目录，取当前最大 `NN` + 1；目录下无编号文档则从 `01` 起
+- `00` 固定留给 README；`99` 段留给杂项与补充（如既有的 `99.others.md`）
+- 一个主题一个文件；同一主题的新结论并入已有文件，不新开
+- 附件与脚本放同级 `assets/` 目录（如 `notes_robotics/assets/`）
+
+## 分类映射
+按内容归属选目录，优先复用既有子类：
+
+| 模块 | 子类 |
+|---|---|
+| notes_devops_infra | 01.version_control / 02.ai_tools / 03.docker / 04.ssh / 05.linux_tools / 06.windows / 07.vcpkg / 08.android / 09.gcc |
+| notes_programming | 01.build_tools / 02.cpp / 03.python / AI / algorithms / design_patterns / web |
+| notes_embedded_system | 01.linux / 02.mqtt / 03.modbus / 04.ethercat / 99.microcontrollers |
+| notes_robotics | 01.robot / 02.ros / 03.apollo / 04.px4 |
+| notes_common_assets | 01.markdown / 02.mkdocs / 03.math / jotting / 99.others |
+| notes_interview | interview |
+
+- 选择顺序：先看 INDEX 有无同名/近义文件 → 再看模块与子类是否贴合 → 仍不确定落 `notes_common_assets/99.others/`，并在提纲里标「待定」
+- 新建子目录（如 `10.xxx`）属于结构变更，必须在提纲里单独说明并等确认，不擅自开
+
+## 正文格式
+与仓库现有文档一致，**不写 frontmatter**：
 
 ```markdown
-# KBase 索引
+# 标题
 
-| 标题 | tags | 路径 | 更新时间 |
-|---|---|---|---|
-| 提交前本地跑 lint | git, ci, lint | entries/kb-0001-precommit-lint.md | 2026-09-02 |
+一句话结论（可独立读懂，说清什么时候该这么做）
+
+## 分节
+按使用顺序展开：安装/配置 → 步骤/命令 → 坑与排查 → 常见问题
 ```
 
-- 路径相对 notes 根，不带前导 `./`
-- tags 用逗号串，不用 YAML 列表
-- 按 id 升序，新条目追加末尾；合并更新只改原有行的更新时间，不挪位置
-- INDEX 只做导航，不放结论；写了条目就必有一行，反之亦然
-
-## 条目格式
-文件名：`<id>-<kebab-slug>.md`，如 `kb-0004-docker-build-cache.md`
-frontmatter 必含：id / title / tags / aliases / keywords / source / created / updated
-正文：结论（一句话）→ 要点 → 适用场景 → 参考
-- 结论必须可独立读懂
-- aliases 收常见叫法，keywords 收检索词
-- source 必填：回指 notes 文件路径或原始来源
-
-## id 分配
-- 格式固定 `kb-` + 四位补零序号，`kb-0001` 起
-- 写入前**重新列一次** `entries/` 取当前最大序号 +1，不要用提纲阶段的旧值（中间可能有别的写入）
-- 目标文件名已存在 → 重取一次最大序号再写，不覆盖
-- 并行/多会话同时 ingestion 时，落盘后校验 id 与文件名一致；不一致则改名并对齐 INDEX 行
-- id 只增不回收，删除条目后空号保留
+- 章节自由组织，不套固定四段式；结论必须前置在正文第一段
+- 命令、路径、报错原文保留原样；代码块标语言
+- 只写可复用的结论与操作，不抄笔记原文，不复述来龙去脉
+- HTTP 链接用 `[描述](url)`；不使用“## 目录”章节
 
 ## 查重与合并判定
 按顺序判定，命中即止：
-1. 待入库内容与某条目的 `source` 指向同一个 notes 文件 → 合并更新该条目
-2. title / aliases / keywords 有实质交集，且「适用场景」讲的是同一个问题 → 合并，source 追加新来源
-3. 同主题但层次不同（如「工具用法」vs「协作流程」）→ 新建，并在两边「参考」互相链接
-4. 吃不准 → 提纲里标「待定」，说明两种处理差异，交用户裁决，不要擅自新建
+1. 目标目录中已有同一主题的文件 → **合并**：补小节、补条目、修结论，保留既有内容，不整篇重写
+2. 同一主题跨目录但层次不同（如「工具用法」vs「排错」）→ 新建，并在两边「参考」互相链接
+3. 内容明显更贴另一个子类 → 写到更贴切的子类，提纲里说明理由
+4. 吃不准 → 提纲标「待定」，给出两种归属，交用户裁决，不要擅自新建
 
-合并只做增量：补要点、补 aliases/keywords、必要时改写结论；不删除原有要点，不整段重写。合并后 bump `updated`。
+## 索引
+`notes/INDEX.md` 是全库导航，四列固定 `标题 | tags | 路径 | 更新时间`，由 `notes/scripts/gen_index.py` 扫描生成：
+
+```bash
+python3 notes/scripts/gen_index.py --check   # 先比对差异
+python3 notes/scripts/gen_index.py           # 全量重建，整体覆盖
+```
+
+- 标题 = 文件名去 `NN.` 前缀；tags = 目录链（去编号、去 `notes_` 前缀）+ 文件名主体；更新时间取文件 mtime
+- 写完条目必须让 INDEX 与文件同步：差异只有新增/改动这一行时，按脚本格式手工补行；差异多才全量重建
+- **先 `--check` 再决定**：脚本用 mtime 当日期，重新克隆或检出后 mtime 全变成本地时间，此时全量重建会把整张表的日期刷一遍（几百行假差异）。遇到这种大规模日期漂移，只补新行，不要覆盖
+- 手写行必须与脚本格式一致：路径用 `/` 分隔、不带前导 `./`、tags 用逗号串、按路径排序插在正确位置
 
 ## ingest 模式（从实践笔记二次归纳）
 触发：用户要求把 notes 提炼进 KBase，或由 gen-practice-notes 移交
 1. 读取指定 notes（单条/多条/最近 N 条）
-2. 按主题聚合，一个主题一条 KB 条目
-3. 提炼为：结论 + 要点 + 适用场景，source 回指 notes 路径
-4. 查重：按「查重与合并判定」处理，同主题合并更新（bump updated），否则新建
-5. 反馈提纲：title / tags / aliases / keywords / 结论摘要 / 新建或合并 / source
+2. 按主题聚合，一个主题一条
+3. 提炼：结论 + 操作/要点，去掉过程
+4. 查重：按「查重与合并判定」，定下目标目录 + 序号 + 新建或合并
+5. 反馈提纲：目标路径 / 序号 / 新建或合并 / 标题 / 结论摘要 / 溯源笔记
 6. **等待用户允许**
-7. 写入 entries/（id 按「id 分配」现取，不沿用提纲值），更新 INDEX.md
-8. 回报：新建/合并条目、溯源 notes、索引变更
+7. 写入（序号落盘前现取），再按「索引」一节的规则同步 INDEX.md
+8. 回报：文件路径、新建或合并、溯源笔记、索引变化
 
 ## 直接写入模式
-用户直接给内容要求入库时，同样走：提炼 → 查重 → 反馈提纲 → 等待允许 → 写入 → 更新索引。
+用户直接给内容要求入库时，同样走：提炼 → 查重 → 反馈提纲 → 等待允许 → 写入 → 重建索引。
 
 ## 检索流程
-1. 读 `notes/INDEX.md`，按 title/tags/aliases/keywords 匹配
-2. 未命中用 `rg -i "<关键词>" notes/entries/` 兜底
-3. 返回 top 3–5：title + 结论 + 路径
-4. 需要详情再读对应条目
-5. 若只在一级 notes 命中、KBase 没有，可提议提炼成 KB 条目
+1. 读 `notes/INDEX.md`，按标题与 tags 匹配（tags 是目录链，可先按模块缩小范围）
+2. 未命中用 `rg -i "<关键词>" notes/` 兜底
+3. 返回 top 3–5：标题 + 路径 + 结论一句话
+4. 需要细节再读对应文件
+5. 若只在实践笔记命中、分类目录没有，可提议提炼成条目
 
 ## 约束
 - 未获允许不得写入
 - 写入前必须查重，禁止同主题重复建条
-- 不复制 notes 全文，只提炼结论式条目
-- source 必填，保证可溯源
-- INDEX.md 与 entries 保持同步，无孤儿条目
+- 不复制笔记全文，只写结论与操作
+- 必须写进分类目录；`entries/` 只读，不再新增
+- 写完必须让 INDEX.md 与文件同步（补行或重建），不留孤儿条目
+- 序号或文件名冲突时重取序号，不覆盖既有文件
 - 检索结果必须带路径
