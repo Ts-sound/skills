@@ -2,7 +2,7 @@
 name: on-demand-toolkit
 description: |
   按需安装第三方常用工具指南。当用户需要安装或配置常用开发工具时触发。
-  触发条件：安装工具、配置 MCP、设置浏览器自动化、UI/UX 设计工具、bb-browser、ui-ux-pro-max、playwright-mcp、superpowers、lark-cli、飞书、open-design、hyperframes、视频生成、ppt-master、oh-my-ppt、幻灯片、browser-use、浏览器自动化。
+  触发条件：安装工具、配置 MCP、设置浏览器自动化、UI/UX 设计工具、bb-browser、ui-ux-pro-max、playwright-mcp、superpowers、lark-cli、飞书、open-design、hyperframes、视频生成、ppt-master、oh-my-ppt、幻灯片、browser-use、浏览器自动化、archify、架构图、图表生成、lemo-opuscar、代码做片、风格化短片。
 ---
 
 # 按需工具集
@@ -105,6 +105,43 @@ Playwright MCP 服务器。通过结构化无障碍树（而非截图）让 LLM 
 
 ---
 
+### archify
+
+**源仓库**: <https://github.com/tt-a1i/archify>
+**使用说明**: 见 [README.md](https://github.com/tt-a1i/archify/blob/main/README.md)
+
+把一句描述、一个问题或一整个仓库变成可交互的 HTML 图表。10 种图型：架构、工作流、时序、数据流、生命周期、ERD、类图、树、时间线、瀑布。产物是单个自包含 HTML，可导出 PNG / 视频 / 分享卡片，也能当一页式讲解页（先结论、后问答面板）。
+
+安装（把 `<agent>` 换成 cursor / codex / claude-code / opencode）：
+
+```bash
+npx -y skills@latest add https://archify.si --skill archify --agent <agent> --global --copy --yes
+```
+
+DeepSeek Harness 也可走插件：`dsh plugin --profile web add @tt-a1i/archify-dsh@1.1.0`。
+
+---
+
+### lemo-opuscar
+
+**源仓库**: <https://github.com/lemomo-ai/lemo-opuscar>
+**使用说明**: 见 [README.md](https://github.com/lemomo-ai/lemo-opuscar/blob/main/README.md) 与[中文版](https://github.com/lemomo-ai/lemo-opuscar/blob/main/README.zh-CN.md)
+
+用代码做片（程序化影片）。66 种现成电影风格（字幕新闻、延时交响、卫星简报、数据实物化、油画厚涂、中国水墨、浮世绘、Risograph、蓝图、瑞士动态排版、16-bit 像素 RPG、积木玩具、移轴微缩…），给定主题后由 agent 写 canvas/WebGL 的 `render(t)` 页面，配原创配乐、TTS 旁白、音效、混音，产出 30–60 秒 MP4 加海报与字幕。不生成视频、不用素材库。
+
+安装（Claude Code 插件市场）：
+
+```bash
+claude plugin marketplace add lemomo-ai/lemo-opuscar
+claude plugin install lemo-opuscar@lemolab
+```
+
+其他客户端：把仓库 `plugin/skills/lemo-opuscar/` 复制到自己的 skills 目录；或直接 `git clone` 后在仓库里开 agent。
+
+前置：Node 20+、ffmpeg 7+、Python 3.11+（或 uv）。首次使用会下载指南、工具与风格提示词到 `~/lemo-opuscar`；自制风格存 `~/lemo-my-styles/<name>/`，更新/卸载不影响。影格默认 1920×1080、24 fps。注意：风格为 Claude Opus 5.5 调校，其他模型复现效果可能打折；一次成片约 30–60 分钟。
+
+---
+
 ## 工具选择
 
 | 场景 | 推荐工具 |
@@ -119,3 +156,5 @@ Playwright MCP 服务器。通过结构化无障碍树（而非截图）让 LLM 
 | 访问已登录网站（CLI） | bb-browser |
 | UI/UX 设计建议 | ui-ux-pro-max |
 | 浏览器自动化测试（MCP） | playwright-mcp |
+| 架构图 / 交互式图表生成 | archify |
+| 代码做片 / 风格化短片 / 程序化影片 | lemo-opuscar |
