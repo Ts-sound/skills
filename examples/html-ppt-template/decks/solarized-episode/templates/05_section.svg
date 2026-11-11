@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="section" data-pptx-layout-name="Chapter Opener"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="1280" height="720" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-section-number-slot" data-pptx-placeholder="body" data-pptx-bounds="80 150 640 252">
+    <text id="ep-section-number" data-pptx-carrier="true" x="80" y="352" fill="#EFE3C6" font-size="132" font-weight="700" letter-spacing="-2">02</text>
+  </g>
+  <g id="ep-section-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 392 1040 88">
+    <text id="ep-section-title" data-pptx-carrier="true" x="80" y="452" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="44" font-weight="700" letter-spacing="2">不是工具清单，先看结构</text>
+  </g>
+  <g id="ep-section-desc-slot" data-pptx-placeholder="body" data-pptx-bounds="80 474 940 92">
+    <text id="ep-section-desc" data-pptx-carrier="true" x="80" y="510" fill="#657B83" font-size="17">把框架拆成五个可替换的接插件，看它们各自负责什么，以及替换之后会发生什么。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P05 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>

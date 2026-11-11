@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solarized Episode · 16 页</title>
+<style>
+  :root { --paper:#FDF6E3; --ink:#073642; --muted:#93A1A1; --accent:#CB4B16; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:#1b1b1b; }
+  body {
+    font-family:"Noto Sans SC","Source Han Sans SC",PingFang SC,Microsoft YaHei,sans-serif;
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+  }
+  .stage {
+    position:relative;
+    width:min(100vw, calc(100vh * 16 / 9));
+    height:min(100vh, calc(100vw * 9 / 16));
+    background:var(--paper);
+    box-shadow:0 24px 80px rgba(0,0,0,.45);
+  }
+  .slide {
+    position:absolute; inset:0;
+    opacity:0; visibility:hidden;
+    transition:opacity .22s ease;
+  }
+  .slide.active { opacity:1; visibility:visible; }
+  .slide svg { display:block; width:100%; height:100%; }
+  .hud {
+    position:fixed; right:18px; bottom:14px;
+    color:#9aa0a0; font-size:12px; letter-spacing:.14em;
+    font-variant-numeric:tabular-nums; user-select:none;
+  }
+  .hint {
+    position:fixed; left:18px; bottom:14px;
+    color:#6d7373; font-size:11px; letter-spacing:.08em;
+    transition:opacity .4s ease; user-select:none;
+  }
+  .hint.fade { opacity:0; }
+  .bar {
+    position:fixed; left:0; top:0; height:2px; background:var(--accent);
+    width:0; transition:width .18s ease;
+  }
+  @media print {
+    html,body { background:#fff; display:block; overflow:visible; }
+    .stage { width:100%; height:auto; box-shadow:none; }
+    .slide { position:relative; opacity:1; visibility:visible; page-break-after:always; }
+    .slide:last-child { page-break-after:auto; }
+    .hud,.hint,.bar { display:none; }
+    @page { size:1280px 720px; margin:0; }
+  }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="stage">
+    <section class="slide" id="s1" aria-label="01_cover">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="cover" data-pptx-layout-name="Cover — Episode Opener"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-1)"/>
+  <rect id="ep-wave-pill" data-pptx-layer="layout" x="340" y="348" width="600" height="92" rx="46" fill="#073642"/>
+  <g id="ep-wave-bars" data-pptx-bounds="340 348 600 92">
+    <rect x="380" y="388.0" width="6" height="12.0" rx="3" fill="#CB4B16" fill-opacity="0.45"/>
+    <rect x="396" y="386.0" width="6" height="15.9" rx="3" fill="#CB4B16" fill-opacity="0.50"/>
+    <rect x="412" y="384.1" width="6" height="19.8" rx="3" fill="#CB4B16" fill-opacity="0.56"/>
+    <rect x="428" y="382.2" width="6" height="23.6" rx="3" fill="#CB4B16" fill-opacity="0.61"/>
+    <rect x="444" y="380.3" width="6" height="27.3" rx="3" fill="#CB4B16" fill-opacity="0.66"/>
+    <rect x="460" y="378.6" width="6" height="30.9" rx="3" fill="#CB4B16" fill-opacity="0.71"/>
+    <rect x="476" y="376.9" width="6" height="34.2" rx="3" fill="#CB4B16" fill-opacity="0.76"/>
+    <rect x="492" y="375.3" width="6" height="37.4" rx="3" fill="#CB4B16" fill-opacity="0.80"/>
+    <rect x="508" y="373.9" width="6" height="40.3" rx="3" fill="#CB4B16" fill-opacity="0.84"/>
+    <rect x="524" y="372.5" width="6" height="42.9" rx="3" fill="#CB4B16" fill-opacity="0.88"/>
+    <rect x="540" y="371.4" width="6" height="45.3" rx="3" fill="#CB4B16" fill-opacity="0.91"/>
+    <rect x="556" y="370.4" width="6" height="47.3" rx="3" fill="#CB4B16" fill-opacity="0.94"/>
+    <rect x="572" y="369.5" width="6" height="49.0" rx="3" fill="#CB4B16" fill-opacity="0.96"/>
+    <rect x="588" y="368.9" width="6" height="50.3" rx="3" fill="#CB4B16" fill-opacity="0.98"/>
+    <rect x="604" y="368.4" width="6" height="51.2" rx="3" fill="#CB4B16" fill-opacity="0.99"/>
+    <rect x="620" y="368.1" width="6" height="51.8" rx="3" fill="#CB4B16" fill-opacity="1.00"/>
+    <rect x="636" y="368.0" width="6" height="52.0" rx="3" fill="#CB4B16" fill-opacity="1.00"/>
+    <rect x="652" y="368.1" width="6" height="51.8" rx="3" fill="#CB4B16" fill-opacity="1.00"/>
+    <rect x="668" y="368.4" width="6" height="51.2" rx="3" fill="#CB4B16" fill-opacity="0.99"/>
+    <rect x="684" y="368.9" width="6" height="50.3" rx="3" fill="#CB4B16" fill-opacity="0.98"/>
+    <rect x="700" y="369.5" width="6" height="49.0" rx="3" fill="#CB4B16" fill-opacity="0.96"/>
+    <rect x="716" y="370.4" width="6" height="47.3" rx="3" fill="#CB4B16" fill-opacity="0.94"/>
+    <rect x="732" y="371.4" width="6" height="45.3" rx="3" fill="#CB4B16" fill-opacity="0.91"/>
+    <rect x="748" y="372.5" width="6" height="42.9" rx="3" fill="#CB4B16" fill-opacity="0.88"/>
+    <rect x="764" y="373.9" width="6" height="40.3" rx="3" fill="#CB4B16" fill-opacity="0.84"/>
+    <rect x="780" y="375.3" width="6" height="37.4" rx="3" fill="#CB4B16" fill-opacity="0.80"/>
+    <rect x="796" y="376.9" width="6" height="34.2" rx="3" fill="#CB4B16" fill-opacity="0.76"/>
+    <rect x="812" y="378.6" width="6" height="30.9" rx="3" fill="#CB4B16" fill-opacity="0.71"/>
+    <rect x="828" y="380.3" width="6" height="27.3" rx="3" fill="#CB4B16" fill-opacity="0.66"/>
+    <rect x="844" y="382.2" width="6" height="23.6" rx="3" fill="#CB4B16" fill-opacity="0.61"/>
+    <rect x="860" y="384.1" width="6" height="19.8" rx="3" fill="#CB4B16" fill-opacity="0.56"/>
+    <rect x="876" y="386.0" width="6" height="15.9" rx="3" fill="#CB4B16" fill-opacity="0.50"/>
+    <rect x="892" y="388.0" width="6" height="12.0" rx="3" fill="#CB4B16" fill-opacity="0.45"/>
+  </g>
+  <g id="ep-kicker-slot" data-pptx-placeholder="body" data-pptx-bounds="80 64 1120 30">
+    <text id="ep-kicker" data-pptx-carrier="true" x="640" y="84" text-anchor="middle" fill="#B58900" font-size="15" font-weight="700" letter-spacing="6">EP.01 / SOLARIZED SERIES</text>
+  </g>
+  <g id="ep-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 116 1120 164">
+    <text id="ep-title" data-pptx-carrier="true" x="640" y="182" text-anchor="middle" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="46" font-weight="700" letter-spacing="4"><tspan x="640" dy="0">一切皆插件的</tspan><tspan x="640" dy="66">Agent 框架</tspan></text>
+  </g>
+  <g id="ep-subtitle-slot" data-pptx-placeholder="subtitle" data-pptx-bounds="80 268 1120 40">
+    <text id="ep-subtitle" data-pptx-carrier="true" x="640" y="302" text-anchor="middle" fill="#657B83" font-size="17">31 轮对话 · 650+ 步执行 · 缓存命中率接近 100%</text>
+  </g>
+  <g id="ep-date-slot" data-pptx-placeholder="date" data-pptx-bounds="80 596 320 28">
+    <text id="ep-date" data-pptx-carrier="true" x="80" y="616" fill="#93A1A1" font-size="12" letter-spacing="2">2026.11 · 内测记录</text>
+  </g>
+  <g id="ep-author-slot" data-pptx-placeholder="body" data-pptx-bounds="860 596 340 28">
+    <text id="ep-author" data-pptx-carrier="true" x="1200" y="616" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="2">深度测评 / 童</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P01 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s2" aria-label="02_toc">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="agenda" data-pptx-layout-name="Agenda — Episode Map"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-2)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <rect id="ep-toc-rule" data-pptx-layer="layout" x="80" y="560" width="1120" height="1" fill="#E7DCC1"/>
+  <g id="ep-agenda-kicker-slot" data-pptx-placeholder="body" data-pptx-bounds="80 96 600 24">
+    <text id="ep-agenda-kicker" data-pptx-carrier="true" x="80" y="114" fill="#B58900" font-size="12" font-weight="700" letter-spacing="6">SECTIONS 01 — 07</text>
+  </g>
+  <g id="ep-agenda-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 132 1120 76">
+    <text id="ep-agenda-title" data-pptx-carrier="true" x="80" y="188" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="40" font-weight="700" letter-spacing="4">本期导航</text>
+  </g>
+  <g id="ep-agenda-list-slot" data-pptx-placeholder="body" data-pptx-bounds="80 220 1120 340">
+    <text id="ep-agenda-list" data-pptx-carrier="true" x="80" y="256" fill="#657B83" font-size="20"><tspan x="80"><tspan fill="#CB4B16" font-weight="700">01</tspan>　开场判断：现在必须 All in AI</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">02</tspan>　不是工具清单：先看结构</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">03</tspan>　超级个体机制：缓存与可追踪</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">04</tspan>　本期生产链路：31 轮 · 650+ 步</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">05</tspan>　五层能力栈：从插件到工作台</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">06</tspan>　老板与个体行动：三步落地</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">07</tspan>　收束与评论：判断与下一步</tspan></text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P02 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s3" aria-label="03_section">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="section" data-pptx-layout-name="Chapter Opener"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-3)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-section-number-slot" data-pptx-placeholder="body" data-pptx-bounds="80 150 640 252">
+    <text id="ep-section-number" data-pptx-carrier="true" x="80" y="352" fill="#EFE3C6" font-size="132" font-weight="700" letter-spacing="-2">01</text>
+  </g>
+  <g id="ep-section-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 392 1040 88">
+    <text id="ep-section-title" data-pptx-carrier="true" x="80" y="452" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="44" font-weight="700" letter-spacing="2">开场判断：现在必须 All in AI</text>
+  </g>
+  <g id="ep-section-desc-slot" data-pptx-placeholder="body" data-pptx-bounds="80 474 940 92">
+    <text id="ep-section-desc" data-pptx-carrier="true" x="80" y="510" fill="#657B83" font-size="17">先把结论摆到前面：工具会过时，结构不会。这一期只讨论一件事——什么样的框架值得押注。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P03 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s4" aria-label="04_content">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="content" data-pptx-layout-name="Title and Content"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-4)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-content-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 84 1120 64">
+    <text id="ep-content-title" data-pptx-carrier="true" x="80" y="132" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="38" font-weight="700" letter-spacing="2">三个判断，一个前提</text>
+  </g>
+  <g id="ep-content-body-slot" data-pptx-placeholder="body" data-pptx-bounds="80 190 1120 380">
+    <text id="ep-content-body" data-pptx-carrier="true" x="80" y="224" fill="#657B83" font-size="18"><tspan x="80" dy="0">模型能力还在涨，但差距在收窄，单点性能不再是护城河。</tspan><tspan x="80" dy="34">真正的分化来自结构：插件怎么接、成本怎么摊、社区怎么长。</tspan><tspan x="80" dy="34">判断一：可插拔。任何一层都能被替换，替换后其余层照常工作。</tspan><tspan x="80" dy="34">判断二：可追踪。每一步都能复盘，成本才有机会被缓存摊平。</tspan><tspan x="80" dy="34">判断三：可生长。插件生态是否一周内长出四种玩法。</tspan></text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P04 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s5" aria-label="05_section">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="section" data-pptx-layout-name="Chapter Opener"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-5)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-section-number-slot" data-pptx-placeholder="body" data-pptx-bounds="80 150 640 252">
+    <text id="ep-section-number" data-pptx-carrier="true" x="80" y="352" fill="#EFE3C6" font-size="132" font-weight="700" letter-spacing="-2">02</text>
+  </g>
+  <g id="ep-section-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 392 1040 88">
+    <text id="ep-section-title" data-pptx-carrier="true" x="80" y="452" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="44" font-weight="700" letter-spacing="2">不是工具清单，先看结构</text>
+  </g>
+  <g id="ep-section-desc-slot" data-pptx-placeholder="body" data-pptx-bounds="80 474 940 92">
+    <text id="ep-section-desc" data-pptx-carrier="true" x="80" y="510" fill="#657B83" font-size="17">把框架拆成五个可替换的接插件，看它们各自负责什么，以及替换之后会发生什么。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P05 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s6" aria-label="06_content_cards">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="content-cards" data-pptx-layout-name="Three Arguments"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-6" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-6)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <rect id="ep-card-1-plate" data-pptx-layer="layout" x="80" y="196" width="346" height="300" rx="16" fill="#EEE8D5" stroke="#E7DCC1" stroke-width="1"/>
+  <rect id="ep-card-1-rule" data-pptx-layer="layout" x="110" y="214" width="48" height="3" fill="#268BD2"/>
+  <rect id="ep-card-2-plate" data-pptx-layer="layout" x="467" y="196" width="346" height="300" rx="16" fill="#EEE8D5" stroke="#E7DCC1" stroke-width="1"/>
+  <rect id="ep-card-2-rule" data-pptx-layer="layout" x="497" y="214" width="48" height="3" fill="#B58900"/>
+  <rect id="ep-card-3-plate" data-pptx-layer="layout" x="854" y="196" width="346" height="300" rx="16" fill="#EEE8D5" stroke="#E7DCC1" stroke-width="1"/>
+  <rect id="ep-card-3-rule" data-pptx-layer="layout" x="884" y="214" width="48" height="3" fill="#2AA198"/>
+  <g id="ep-cards-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 84 1120 64">
+    <text id="ep-cards-title" data-pptx-carrier="true" x="80" y="132" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="38" font-weight="700" letter-spacing="2">五个接插件，各管一段</text>
+  </g>
+  <g id="ep-card-1-slot" data-pptx-placeholder="object" data-pptx-bounds="80 196 346 300">
+    <text id="ep-card-1-text" data-pptx-carrier="true" x="106" y="266" fill="#B58900" font-size="11" font-weight="700" letter-spacing="2">01 / 结构<tspan x="106" dy="38" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="21" font-weight="700" letter-spacing="0" fill="#073642">一切皆插件</tspan><tspan x="106" dy="38" font-size="14" font-weight="400" letter-spacing="0" fill="#657B83">界面、执行器、会话存储都是接插件。</tspan><tspan x="106" dy="26" font-size="14" font-weight="400" fill="#657B83">换掉任何一个，其余两层照常工作。</tspan><tspan x="106" dy="26" font-size="14" font-weight="400" fill="#657B83">这就是可替换性的证据。</tspan></text>
+  </g>
+  <g id="ep-card-2-slot" data-pptx-placeholder="object" data-pptx-bounds="467 196 346 300">
+    <text id="ep-card-2-text" data-pptx-carrier="true" x="493" y="266" fill="#B58900" font-size="11" font-weight="700" letter-spacing="2">02 / 证据<tspan x="493" dy="38" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="21" font-weight="700" letter-spacing="0" fill="#073642">缓存接近全命中</tspan><tspan x="493" dy="38" font-size="14" font-weight="400" letter-spacing="0" fill="#657B83">31 轮、650+ 步的记录里，重复</tspan><tspan x="493" dy="26" font-size="14" font-weight="400" fill="#657B83">计算被缓存吃掉，成本曲线不再</tspan><tspan x="493" dy="26" font-size="14" font-weight="400" fill="#657B83">线性，命中率约为 100%。</tspan></text>
+  </g>
+  <g id="ep-card-3-slot" data-pptx-placeholder="object" data-pptx-bounds="854 196 346 300">
+    <text id="ep-card-3-text" data-pptx-carrier="true" x="880" y="266" fill="#B58900" font-size="11" font-weight="700" letter-spacing="2">03 / 生态<tspan x="880" dy="38" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="21" font-weight="700" letter-spacing="0" fill="#073642">社区接得住</tspan><tspan x="880" dy="38" font-size="14" font-weight="400" letter-spacing="0" fill="#657B83">一周内出现门户皮肤、Claude Code</tspan><tspan x="880" dy="26" font-size="14" font-weight="400" fill="#657B83">风格界面、全能工作台与多 Agent</tspan><tspan x="880" dy="26" font-size="14" font-weight="400" fill="#657B83">协作四种玩法。</tspan></text>
+  </g>
+  <g id="ep-cards-summary-slot" data-pptx-placeholder="body" data-pptx-idx="6" data-pptx-bounds="80 536 1120 42">
+    <text id="ep-cards-summary" data-pptx-carrier="true" x="80" y="564" fill="#586E75" font-size="17">三项证据合起来就是判断：可插拔、低成本、生态活跃——缺任何一条，都不值得押注。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P06 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s7" aria-label="07_section">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="section" data-pptx-layout-name="Chapter Opener"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-7" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-7)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-section-number-slot" data-pptx-placeholder="body" data-pptx-bounds="80 150 640 252">
+    <text id="ep-section-number" data-pptx-carrier="true" x="80" y="352" fill="#EFE3C6" font-size="132" font-weight="700" letter-spacing="-2">03</text>
+  </g>
+  <g id="ep-section-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 392 1040 88">
+    <text id="ep-section-title" data-pptx-carrier="true" x="80" y="452" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="44" font-weight="700" letter-spacing="2">超级个体机制：缓存与可追踪</text>
+  </g>
+  <g id="ep-section-desc-slot" data-pptx-placeholder="body" data-pptx-bounds="80 474 940 92">
+    <text id="ep-section-desc" data-pptx-carrier="true" x="80" y="510" fill="#657B83" font-size="17">同一个人为什么能顶一个团队？答案不在勤奋，而在把重复劳动沉进结构里。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P07 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s8" aria-label="08_content_data">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="content-data" data-pptx-layout-name="Metric Strip"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-8" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-8)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-data-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 84 1120 64">
+    <text id="ep-data-title" data-pptx-carrier="true" x="80" y="132" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="38" font-weight="700" letter-spacing="2">本期链路的关键数据</text>
+  </g>
+  <rect x="80" y="196" width="262" height="3" fill="#268BD2"/>
+  <g id="ep-metric-1-slot" data-pptx-placeholder="object" data-pptx-bounds="80 204 262 110">
+    <text id="ep-metric-1-text" data-pptx-carrier="true" x="80" y="266" fill="#268BD2" font-size="46" font-weight="700">31<tspan x="80" dy="34" font-size="13" font-weight="400" fill="#93A1A1">轮对话 · 单次内测</tspan></text>
+  </g>
+  <rect x="366" y="196" width="262" height="3" fill="#B58900"/>
+  <g id="ep-metric-2-slot" data-pptx-placeholder="object" data-pptx-bounds="366 204 262 110">
+    <text id="ep-metric-2-text" data-pptx-carrier="true" x="366" y="266" fill="#B58900" font-size="46" font-weight="700">650+<tspan x="366" dy="34" font-size="13" font-weight="400" fill="#93A1A1">执行步数</tspan></text>
+  </g>
+  <rect x="652" y="196" width="262" height="3" fill="#CB4B16"/>
+  <g id="ep-metric-3-slot" data-pptx-placeholder="object" data-pptx-bounds="652 204 262 110">
+    <text id="ep-metric-3-text" data-pptx-carrier="true" x="652" y="266" fill="#CB4B16" font-size="46" font-weight="700">≈100%<tspan x="652" dy="34" font-size="13" font-weight="400" fill="#93A1A1">缓存命中率</tspan></text>
+  </g>
+  <rect x="938" y="196" width="262" height="3" fill="#2AA198"/>
+  <g id="ep-metric-4-slot" data-pptx-placeholder="object" data-pptx-bounds="938 204 262 110">
+    <text id="ep-metric-4-text" data-pptx-carrier="true" x="938" y="266" fill="#2AA198" font-size="46" font-weight="700">21<tspan x="938" dy="34" font-size="13" font-weight="400" fill="#93A1A1">首轮 token 数</tspan></text>
+  </g>
+  <rect id="ep-takeaway-panel" x="80" y="420" width="1120" height="150" rx="16" fill="#EEE8D5"/>
+  <rect id="ep-takeaway-bar" x="80" y="444" width="3" height="102" fill="#CB4B16"/>
+  <g id="ep-data-takeaway-slot" data-pptx-placeholder="body" data-pptx-bounds="104 440 1072 110">
+    <text id="ep-data-takeaway" data-pptx-carrier="true" x="104" y="496" fill="#073642" font-size="16">成本优势不来自更小的模型，而来自可追踪的缓存结构：同类任务第二次跑，几乎是免费的。<tspan x="104" dy="30" fill="#657B83">这也是为什么“全程可追踪”不是体验细节，而是成本结构本身。</tspan></text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P08 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s9" aria-label="09_section">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="section" data-pptx-layout-name="Chapter Opener"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-9" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-9)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-section-number-slot" data-pptx-placeholder="body" data-pptx-bounds="80 150 640 252">
+    <text id="ep-section-number" data-pptx-carrier="true" x="80" y="352" fill="#EFE3C6" font-size="132" font-weight="700" letter-spacing="-2">04</text>
+  </g>
+  <g id="ep-section-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 392 1040 88">
+    <text id="ep-section-title" data-pptx-carrier="true" x="80" y="452" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="44" font-weight="700" letter-spacing="2">本期生产链路：31 轮 · 650+ 步</text>
+  </g>
+  <g id="ep-section-desc-slot" data-pptx-placeholder="body" data-pptx-bounds="80 474 940 92">
+    <text id="ep-section-desc" data-pptx-carrier="true" x="80" y="510" fill="#657B83" font-size="17">从一句需求到一份可交付的模板，中间发生了什么，哪些环节真的省了钱。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P09 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s10" aria-label="10_content_data">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="content-data" data-pptx-layout-name="Metric Strip"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-10" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-10)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-data-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 84 1120 64">
+    <text id="ep-data-title" data-pptx-carrier="true" x="80" y="132" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="38" font-weight="700" letter-spacing="2">成本被摊平在哪一段</text>
+  </g>
+  <rect x="80" y="196" width="262" height="3" fill="#268BD2"/>
+  <g id="ep-metric-1-slot" data-pptx-placeholder="object" data-pptx-bounds="80 204 262 110">
+    <text id="ep-metric-1-text" data-pptx-carrier="true" x="80" y="266" fill="#268BD2" font-size="46" font-weight="700">4×<tspan x="80" dy="34" font-size="13" font-weight="400" fill="#93A1A1">复用任务提速</tspan></text>
+  </g>
+  <rect x="366" y="196" width="262" height="3" fill="#B58900"/>
+  <g id="ep-metric-2-slot" data-pptx-placeholder="object" data-pptx-bounds="366 204 262 110">
+    <text id="ep-metric-2-text" data-pptx-carrier="true" x="366" y="266" fill="#B58900" font-size="46" font-weight="700">92%<tspan x="366" dy="34" font-size="13" font-weight="400" fill="#93A1A1">步骤可复用</tspan></text>
+  </g>
+  <rect x="652" y="196" width="262" height="3" fill="#CB4B16"/>
+  <g id="ep-metric-3-slot" data-pptx-placeholder="object" data-pptx-bounds="652 204 262 110">
+    <text id="ep-metric-3-text" data-pptx-carrier="true" x="652" y="266" fill="#CB4B16" font-size="46" font-weight="700">1 人<tspan x="652" dy="34" font-size="13" font-weight="400" fill="#93A1A1">完成全链路</tspan></text>
+  </g>
+  <rect x="938" y="196" width="262" height="3" fill="#2AA198"/>
+  <g id="ep-metric-4-slot" data-pptx-placeholder="object" data-pptx-bounds="938 204 262 110">
+    <text id="ep-metric-4-text" data-pptx-carrier="true" x="938" y="266" fill="#2AA198" font-size="46" font-weight="700">7 天<tspan x="938" dy="34" font-size="13" font-weight="400" fill="#93A1A1">从想法到成稿</tspan></text>
+  </g>
+  <rect id="ep-takeaway-panel" x="80" y="420" width="1120" height="150" rx="16" fill="#EEE8D5"/>
+  <rect id="ep-takeaway-bar" x="80" y="444" width="3" height="102" fill="#CB4B16"/>
+  <g id="ep-data-takeaway-slot" data-pptx-placeholder="body" data-pptx-bounds="104 440 1072 110">
+    <text id="ep-data-takeaway" data-pptx-carrier="true" x="104" y="496" fill="#073642" font-size="16">链路的价值不是更快，而是可复现：同一套结构第二次跑，几乎只剩判断成本。<tspan x="104" dy="30" fill="#657B83">省下来的不是人力，而是每一次重新想清楚的那段时间。</tspan></text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P10 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s11" aria-label="11_section">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="section" data-pptx-layout-name="Chapter Opener"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-11" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-11)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-section-number-slot" data-pptx-placeholder="body" data-pptx-bounds="80 150 640 252">
+    <text id="ep-section-number" data-pptx-carrier="true" x="80" y="352" fill="#EFE3C6" font-size="132" font-weight="700" letter-spacing="-2">05</text>
+  </g>
+  <g id="ep-section-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 392 1040 88">
+    <text id="ep-section-title" data-pptx-carrier="true" x="80" y="452" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="44" font-weight="700" letter-spacing="2">五层能力栈：从插件到工作台</text>
+  </g>
+  <g id="ep-section-desc-slot" data-pptx-placeholder="body" data-pptx-bounds="80 474 940 92">
+    <text id="ep-section-desc" data-pptx-carrier="true" x="80" y="510" fill="#657B83" font-size="17">插件、技能、工作流、界面、Agent——五层各自可替换，组合起来才是一个工作台。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P11 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s12" aria-label="12_content_cards">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="content-cards" data-pptx-layout-name="Three Arguments"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-12" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-12)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <rect id="ep-card-1-plate" data-pptx-layer="layout" x="80" y="196" width="346" height="300" rx="16" fill="#EEE8D5" stroke="#E7DCC1" stroke-width="1"/>
+  <rect id="ep-card-1-rule" data-pptx-layer="layout" x="110" y="214" width="48" height="3" fill="#268BD2"/>
+  <rect id="ep-card-2-plate" data-pptx-layer="layout" x="467" y="196" width="346" height="300" rx="16" fill="#EEE8D5" stroke="#E7DCC1" stroke-width="1"/>
+  <rect id="ep-card-2-rule" data-pptx-layer="layout" x="497" y="214" width="48" height="3" fill="#B58900"/>
+  <rect id="ep-card-3-plate" data-pptx-layer="layout" x="854" y="196" width="346" height="300" rx="16" fill="#EEE8D5" stroke="#E7DCC1" stroke-width="1"/>
+  <rect id="ep-card-3-rule" data-pptx-layer="layout" x="884" y="214" width="48" height="3" fill="#2AA198"/>
+  <g id="ep-cards-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 84 1120 64">
+    <text id="ep-cards-title" data-pptx-carrier="true" x="80" y="132" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="38" font-weight="700" letter-spacing="2">五层栈，从下往上长</text>
+  </g>
+  <g id="ep-card-1-slot" data-pptx-placeholder="object" data-pptx-bounds="80 196 346 300">
+    <text id="ep-card-1-text" data-pptx-carrier="true" x="106" y="266" fill="#B58900" font-size="11" font-weight="700" letter-spacing="2">01 / 底座<tspan x="106" dy="38" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="21" font-weight="700" letter-spacing="0" fill="#073642">插件层</tspan><tspan x="106" dy="38" font-size="14" font-weight="400" letter-spacing="0" fill="#657B83">模型、工具、存储都以插件形式接入。</tspan><tspan x="106" dy="26" font-size="14" font-weight="400" fill="#657B83">换模型不改业务，换存储不丢上下文。</tspan><tspan x="106" dy="26" font-size="14" font-weight="400" fill="#657B83">接入成本由此变成一次性投入。</tspan></text>
+  </g>
+  <g id="ep-card-2-slot" data-pptx-placeholder="object" data-pptx-bounds="467 196 346 300">
+    <text id="ep-card-2-text" data-pptx-carrier="true" x="493" y="266" fill="#B58900" font-size="11" font-weight="700" letter-spacing="2">02 / 中间<tspan x="493" dy="38" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="21" font-weight="700" letter-spacing="0" fill="#073642">技能与工作流</tspan><tspan x="493" dy="38" font-size="14" font-weight="400" letter-spacing="0" fill="#657B83">技能是可复用的说明书，工作流是</tspan><tspan x="493" dy="26" font-size="14" font-weight="400" fill="#657B83">可复用的步骤，两者都不绑定具体</tspan><tspan x="493" dy="26" font-size="14" font-weight="400" fill="#657B83">模型，也不绑定具体界面。</tspan></text>
+  </g>
+  <g id="ep-card-3-slot" data-pptx-placeholder="object" data-pptx-bounds="854 196 346 300">
+    <text id="ep-card-3-text" data-pptx-carrier="true" x="880" y="266" fill="#B58900" font-size="11" font-weight="700" letter-spacing="2">03 / 顶层<tspan x="880" dy="38" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="21" font-weight="700" letter-spacing="0" fill="#073642">界面与 Agent</tspan><tspan x="880" dy="38" font-size="14" font-weight="400" letter-spacing="0" fill="#657B83">界面可以换皮肤，Agent 可以换</tspan><tspan x="880" dy="26" font-size="14" font-weight="400" fill="#657B83">执行器；同一套能力，既能长成</tspan><tspan x="880" dy="26" font-size="14" font-weight="400" fill="#657B83">门户，也能长成桌面端。</tspan></text>
+  </g>
+  <g id="ep-cards-summary-slot" data-pptx-placeholder="body" data-pptx-idx="6" data-pptx-bounds="80 536 1120 42">
+    <text id="ep-cards-summary" data-pptx-carrier="true" x="80" y="564" fill="#586E75" font-size="17">层与层之间只有接口约定：下层不动，上层可以反复重做。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P12 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s13" aria-label="13_section">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="section" data-pptx-layout-name="Chapter Opener"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-13" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-13)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-section-number-slot" data-pptx-placeholder="body" data-pptx-bounds="80 150 640 252">
+    <text id="ep-section-number" data-pptx-carrier="true" x="80" y="352" fill="#EFE3C6" font-size="132" font-weight="700" letter-spacing="-2">06</text>
+  </g>
+  <g id="ep-section-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 392 1040 88">
+    <text id="ep-section-title" data-pptx-carrier="true" x="80" y="452" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="44" font-weight="700" letter-spacing="2">老板与个体行动：三步落地</text>
+  </g>
+  <g id="ep-section-desc-slot" data-pptx-placeholder="body" data-pptx-bounds="80 474 940 92">
+    <text id="ep-section-desc" data-pptx-carrier="true" x="80" y="510" fill="#657B83" font-size="17">不需要一次性重构。先找一段最重复的流程，把它变成可复用的结构。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P13 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s14" aria-label="14_content">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="content" data-pptx-layout-name="Title and Content"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-14" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-14)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-content-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 84 1120 64">
+    <text id="ep-content-title" data-pptx-carrier="true" x="80" y="132" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="38" font-weight="700" letter-spacing="2">三步落地，先跑一遍</text>
+  </g>
+  <g id="ep-content-body-slot" data-pptx-placeholder="body" data-pptx-bounds="80 190 1120 380">
+    <text id="ep-content-body" data-pptx-carrier="true" x="80" y="224" fill="#657B83" font-size="18"><tspan x="80" dy="0">第一步：选一段每周都重复的流程，记录它的输入、判断与输出。</tspan><tspan x="80" dy="34">第二步：把判断写成技能，把步骤写成工作流，先不追求全自动。</tspan><tspan x="80" dy="34">第三步：接入可替换的界面，让不写代码的人也能把它跑起来。</tspan><tspan x="80" dy="34">衡量标准只有一条：第二次执行的时间，是否明显短于第一次。</tspan><tspan x="80" dy="34">如果答案是否定的，说明它还没有被结构化成可复用的形状。</tspan></text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P14 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s15" aria-label="15_section">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="section" data-pptx-layout-name="Chapter Opener"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-15" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-15)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <g id="ep-section-number-slot" data-pptx-placeholder="body" data-pptx-bounds="80 150 640 252">
+    <text id="ep-section-number" data-pptx-carrier="true" x="80" y="352" fill="#EFE3C6" font-size="132" font-weight="700" letter-spacing="-2">07</text>
+  </g>
+  <g id="ep-section-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 392 1040 88">
+    <text id="ep-section-title" data-pptx-carrier="true" x="80" y="452" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="44" font-weight="700" letter-spacing="2">收束与评论：判断与下一步</text>
+  </g>
+  <g id="ep-section-desc-slot" data-pptx-placeholder="body" data-pptx-bounds="80 474 940 92">
+    <text id="ep-section-desc" data-pptx-carrier="true" x="80" y="510" fill="#657B83" font-size="17">工具会继续换。值得留下的，是那套能被反复复用的判断结构。</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P15 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+    <section class="slide" id="s16" aria-label="16_ending">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="100%" height="100%"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="closing" data-pptx-layout-name="Closing"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash-16" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="100%" height="100%" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash-16)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <rect id="ep-closing-rule" data-pptx-layer="layout" x="600" y="392" width="80" height="2" fill="#CB4B16"/>
+  <g id="ep-closing-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 190 1120 120">
+    <text id="ep-closing-title" data-pptx-carrier="true" x="640" y="272" text-anchor="middle" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="46" font-weight="700" letter-spacing="4">判断先于工具。</text>
+  </g>
+  <g id="ep-closing-contact-slot" data-pptx-placeholder="subtitle" data-pptx-bounds="80 318 1120 46">
+    <text id="ep-closing-contact" data-pptx-carrier="true" x="640" y="348" text-anchor="middle" fill="#657B83" font-size="17">童 · 深度测评 · 2026.11</text>
+  </g>
+  <g id="ep-closing-copy-slot" data-pptx-placeholder="body" data-pptx-bounds="80 596 1120 28">
+    <text id="ep-closing-copy" data-pptx-carrier="true" x="80" y="616" fill="#93A1A1" font-size="12" letter-spacing="1">© 2026 童 · 数据来自内测记录，结论仅代表个人判断</text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P16 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#586E75"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#FDF6E3" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#CB4B16"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#FFFCF3" font-size="12" font-weight="700" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>
+    </section>
+</div>
+<div class="hud"><span id="page">1</span> / 16</div>
+<div class="hint" id="hint">← → 翻页 · F 全屏 · P 打印 / 存 PDF</div>
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const total = slides.length;
+  const bar = document.getElementById('bar');
+  const pageEl = document.getElementById('page');
+  const hint = document.getElementById('hint');
+  let i = 0;
+
+  function show(n) {
+    i = Math.max(0, Math.min(total - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    pageEl.textContent = i + 1;
+    bar.style.width = ((i + 1) / total * 100) + '%';
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+  const next = () => show(i + 1);
+  const prev = () => show(i - 1);
+
+  addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(total - 1);
+    else if (e.key === 'f' || e.key === 'F') {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+    } else if (e.key === 'p' || e.key === 'P') { print(); }
+  });
+
+  document.addEventListener('click', e => {
+    const x = e.clientX / innerWidth;
+    if (x > 0.62) next();
+    else if (x < 0.38) prev();
+  });
+
+  let tx = null;
+  addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', e => {
+    if (tx === null) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
+    tx = null;
+  }, { passive: true });
+
+  setTimeout(() => hint.classList.add('fade'), 4200);
+
+  const start = parseInt(location.hash.slice(1), 10);
+  show(Number.isFinite(start) ? start - 1 : 0);
+</script>
+</body>
+</html>

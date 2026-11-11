@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720"
+  data-pptx-master="solarized_episode_master" data-pptx-master-name="Solarized Episode"
+  data-pptx-layout="agenda" data-pptx-layout-name="Agenda — Episode Map"
+  font-family="Noto Sans SC, Source Han Sans SC, Arial, sans-serif">
+  <defs>
+    <linearGradient id="ep-wash" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFCF3"/>
+      <stop offset="1" stop-color="#FDF6E3"/>
+    </linearGradient>
+  </defs>
+  <rect id="ep-master-bg" data-pptx-layer="master" x="0" y="0" width="1280" height="720" fill="#FDF6E3"/>
+  <rect id="ep-master-wash" data-pptx-layer="master" x="0" y="0" width="1280" height="300" fill="url(#ep-wash)"/>
+  <rect id="ep-rule" data-pptx-layer="layout" x="80" y="58" width="56" height="4" fill="#CB4B16"/>
+  <rect id="ep-toc-rule" data-pptx-layer="layout" x="80" y="560" width="1120" height="1" fill="#E7DCC1"/>
+  <g id="ep-agenda-kicker-slot" data-pptx-placeholder="body" data-pptx-bounds="80 96 600 24">
+    <text id="ep-agenda-kicker" data-pptx-carrier="true" x="80" y="114" fill="#B58900" font-size="12" font-weight="700" letter-spacing="6">SECTIONS 01 — 07</text>
+  </g>
+  <g id="ep-agenda-title-slot" data-pptx-placeholder="title" data-pptx-bounds="80 132 1120 76">
+    <text id="ep-agenda-title" data-pptx-carrier="true" x="80" y="188" fill="#073642" font-family="Noto Serif SC, Source Han Serif SC, serif" font-size="40" font-weight="700" letter-spacing="4">本期导航</text>
+  </g>
+  <g id="ep-agenda-list-slot" data-pptx-placeholder="body" data-pptx-bounds="80 220 1120 340">
+    <text id="ep-agenda-list" data-pptx-carrier="true" x="80" y="256" fill="#657B83" font-size="20"><tspan x="80"><tspan fill="#CB4B16" font-weight="700">01</tspan>　开场判断：现在必须 All in AI</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">02</tspan>　不是工具清单：先看结构</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">03</tspan>　超级个体机制：缓存与可追踪</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">04</tspan>　本期生产链路：31 轮 · 650+ 步</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">05</tspan>　五层能力栈：从插件到工作台</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">06</tspan>　老板与个体行动：三步落地</tspan><tspan x="80" dy="48"><tspan fill="#CB4B16" font-weight="700">07</tspan>　收束与评论：判断与下一步</tspan></text>
+  </g>
+  <g id="ep-slide-number-slot" data-pptx-placeholder="slide-number" data-pptx-bounds="1110 656 90 30">
+    <text id="ep-slide-number" data-pptx-carrier="true" x="1200" y="676" text-anchor="end" fill="#93A1A1" font-size="12" letter-spacing="1">P02 / 16</text>
+  </g>
+  <g id="ep-chapter-chips" data-pptx-bounds="80 650 1016 38">
+    <rect id="chip-01-bg" x="80.0" y="650" width="119.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-01-label" x="139.8" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">开场判断</text>
+    <rect id="chip-02-bg" x="207.5" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-02-label" x="279.2" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">不是工具清单</text>
+    <rect id="chip-03-bg" x="358.9" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-03-label" x="430.6" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">超级个体机制</text>
+    <rect id="chip-04-bg" x="510.3" y="650" width="143.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-04-label" x="582.0" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">本期生产链路</text>
+    <rect id="chip-05-bg" x="661.7" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-05-label" x="727.5" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">五层能力栈</text>
+    <rect id="chip-06-bg" x="801.2" y="650" width="155.4" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-06-label" x="878.9" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">老板与个体行动</text>
+    <rect id="chip-07-bg" x="964.6" y="650" width="131.5" height="38" rx="19" fill="#F0E8D4"/>
+    <text id="chip-07-label" x="1030.3" y="674" text-anchor="middle" fill="#93A1A1" font-size="12" letter-spacing="1">收束与评论</text>
+  </g>
+</svg>

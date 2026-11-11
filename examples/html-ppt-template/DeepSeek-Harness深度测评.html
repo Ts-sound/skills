@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSeek Harness 深度测评 · 一切皆插件的Agent框架</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232e7d32'/%3E%3Ctext x='32' y='44' font-size='32' font-weight='bold' text-anchor='middle' fill='white' font-family='sans-serif'%3ED%3C/text%3E%3C/svg%3E">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f4f2ed;
+    color: #1a1a1a;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 20px 16px 40px;
+  }
+
+  /* ===== Hero 区域 ===== */
+  .hero {
+    background: linear-gradient(135deg, #e8f3e0 0%, #fdf6e3 100%);
+    border-radius: 20px;
+    padding: 40px 32px;
+    margin-bottom: 20px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: #2e7d32;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px 18px;
+    border-radius: 6px;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    color: #111;
+  }
+
+  .hero .subtitle {
+    font-size: 17px;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-tag {
+    background: #fff;
+    border: 1.5px solid #c8e6c9;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #2e7d32;
+  }
+
+  /* ===== 通用卡片 ===== */
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #111;
+  }
+
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 26px;
+    background: #4caf50;
+    border-radius: 3px;
+    margin-right: 14px;
+  }
+
+  /* ===== 导读区 ===== */
+  .intro-box {
+    background: #e8f5e9;
+    border-left: 4px solid #66bb6a;
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-size: 16px;
+    line-height: 1.9;
+    color: #2c2c2c;
+    margin-bottom: 24px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 18px;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .check-item:last-child { margin-bottom: 0; }
+
+  .check-icon {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    background: #a5d6a7;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3px;
+  }
+
+  .check-icon svg {
+    width: 14px;
+    height: 14px;
+    stroke: #fff;
+    stroke-width: 3;
+    fill: none;
+  }
+
+  .check-item strong {
+    font-weight: 700;
+    color: #111;
+  }
+
+  /* ===== 关键数据 ===== */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: #faf6e3;
+    border: 1.5px solid #e6dc9e;
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 36px;
+    font-weight: 800;
+    color: #111;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+  .tip-box {
+    background: #fff8e1;
+    border-left: 4px solid #ffa726;
+    border-radius: 10px;
+    padding: 18px 22px;
+  }
+
+  .tip-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #111;
+  }
+
+  .tip-box p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  /* ===== 设计哲学 ===== */
+  .bullet-list {
+    list-style: none;
+    margin-bottom: 24px;
+  }
+
+  .bullet-list li {
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #2c2c2c;
+  }
+
+  .bullet-list li:last-child { margin-bottom: 0; }
+
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 10px;
+    height: 10px;
+    background: #66bb6a;
+    border-radius: 50%;
+  }
+
+  .bullet-list strong {
+    font-weight: 700;
+    color: #111;
+  }
+
+  .quote-box {
+    background: #faf6e3;
+    border-radius: 12px;
+    padding: 24px 28px;
+    position: relative;
+  }
+
+  .quote-mark {
+    font-size: 48px;
+    font-weight: 900;
+    color: #333;
+    line-height: 1;
+    margin-bottom: 8px;
+    font-family: Georgia, serif;
+  }
+
+  .quote-text {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+
+  .quote-author {
+    text-align: right;
+    font-size: 16px;
+    color: #555;
+  }
+
+  /* ===== 社区插件案例 ===== */
+  .case-card {
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+
+  .case-card:last-child { margin-bottom: 0; }
+
+  .case-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #111;
+  }
+
+  .case-icon {
+    font-size: 22px;
+  }
+
+  .case-card p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  /* ===== 开发者启发 ===== */
+  .insight-box {
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+
+  .insight-box:last-child { margin-bottom: 0; }
+
+  .insight-green {
+    background: #e8f5e9;
+  }
+
+  .insight-yellow {
+    background: #fff8e1;
+  }
+
+  .insight-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #111;
+  }
+
+  .insight-box p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  /* ===== 行动建议表格 ===== */
+  .action-table {
+    margin-bottom: 20px;
+  }
+
+  .action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .action-row:last-child {
+    border-bottom: none;
+  }
+
+  .action-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+
+  .action-icon {
+    font-size: 20px;
+  }
+
+  .action-right {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+    text-align: right;
+  }
+
+  /* ===== 结尾总结 ===== */
+  .closing-text {
+    font-size: 16px;
+    line-height: 2;
+    color: #2c2c2c;
+    margin-bottom: 20px;
+  }
+
+  .closing-author {
+    text-align: right;
+    font-size: 16px;
+    color: #555;
+  }
+
+  /* ===== 页脚 ===== */
+  .footer {
+    text-align: center;
+    padding: 24px 0 0;
+    color: #999;
+    font-size: 14px;
+    line-height: 2;
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 480px) {
+    .container { padding: 12px 10px 32px; }
+    .hero { padding: 28px 20px; border-radius: 16px; }
+    .hero h1 { font-size: 26px; }
+    .hero .subtitle { font-size: 15px; }
+    .hero-tags { gap: 8px; }
+    .hero-tag { font-size: 13px; padding: 8px 14px; }
+    .card { padding: 24px 18px; border-radius: 14px; }
+    .section-title { font-size: 19px; }
+    .stat-number { font-size: 28px; }
+    .quote-text { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Hero 头部 -->
+  <div class="hero">
+    <span class="badge">深度测评</span>
+    <h1>DeepSeek Harness<br>一切皆插件的Agent框架</h1>
+    <p class="subtitle">内测体验 21 个token后：设计哲学很清晰，架构自由度极高。</p>
+    <div class="hero-tags">
+      <span class="hero-tag">✦ 内测体验</span>
+      <span class="hero-tag">✦ 插件化设计</span>
+      <span class="hero-tag">✦ 社区生态活跃</span>
+    </div>
+  </div>
+
+  <!-- 导读·核心发现 -->
+  <div class="card">
+    <div class="section-title">导读 · 核心发现</div>
+    <div class="intro-box">
+      基于 Kora 框架的 DeepSeek Harness，用「一切接插件」的方式重新组织了 Agent 工作流。从模型、工具、存储到 UI 界面，均可自由替换。
+    </div>
+    <div class="check-item">
+      <span class="check-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
+      <span><strong>缓存优化显著：</strong>31轮对话、650+ 步骤后，缓存率接近 100%（界面显示 100%）。</span>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
+      <span><strong>运行全程可追踪：</strong>系统提示词、Skills 列表、上下文信息全部可视化。</span>
+    </div>
+    <div class="check-item">
+      <span class="check-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
+      <span><strong>社区插件百花齐放：</strong>从门户网站整活到多Agent协作开发，插件想象力惊人。</span>
+    </div>
+  </div>
+
+  <!-- 关键数据 -->
+  <div class="card">
+    <div class="section-title">关键数据</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">21</div>
+        <div class="stat-label">内测体验<br>token消耗</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">31</div>
+        <div class="stat-label">对话轮数<br>连续运行</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">650+</div>
+        <div class="stat-label">执行步骤<br>复杂协奏</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">≈100%</div>
+        <div class="stat-label">命中缓存率<br>大幅提速</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">💡 实验体感</div>
+      <p>DeepSeek Harness 配合 DSRV-4 速度非常快，缓存机制让长会话的重复解析成本大幅降低。</p>
+    </div>
+  </div>
+
+  <!-- 设计哲学·核心解读 -->
+  <div class="card">
+    <div class="section-title">设计哲学 · 核心解读</div>
+    <ul class="bullet-list">
+      <li><strong>基于 Kora 框架：</strong>一切皆是插件，包括驱动 Agent 的 ReAct 循环本身。</li>
+      <li><strong>五大接插件：</strong>模型、工具、策略、存储、上下文管理均可定制。</li>
+      <li><strong>官方界面可替换：</strong>用户无需使用默认 UI，写插件即可接入自己的界面。</li>
+      <li><strong>一切外部组件：</strong>甚至可以把整个 Runner 逻辑替换成自定义实现。</li>
+    </ul>
+    <div class="quote-box">
+      <div class="quote-mark">"</div>
+      <div class="quote-text">「一切接插件」这个设计，才是最核心的优势。</div>
+      <div class="quote-author">—— 测评者</div>
+    </div>
+  </div>
+
+  <!-- 社区插件案例 -->
+  <div class="card">
+    <div class="section-title">社区插件案例</div>
+    <div class="case-card">
+      <div class="case-title">
+        <span class="case-icon">🎨</span>
+        2005 门户网站皮肤
+      </div>
+      <p>把 harness 变成复古门户首页，连推理过程都逃不过广告。实测趣味性拉满，证明 UI 可完全自定义。</p>
+    </div>
+    <div class="case-card">
+      <div class="case-title">
+        <span class="case-icon">💻</span>
+        Claude Code 风格 UI
+      </div>
+      <p>因为官方不提供 CLI 版本，社区直接做了一个 Claude Code 风格的终端交互界面。</p>
+    </div>
+    <div class="case-card">
+      <div class="case-title">
+        <span class="case-icon">📁</span>
+        全能工作台
+      </div>
+      <p>支持文件管理、编辑预览、内嵌浏览器、真实终端与任务面板，开发体验向轻量 IDE 逼近。</p>
+    </div>
+    <div class="case-card">
+      <div class="case-title">
+        <span class="case-icon">🤝</span>
+        多 Agent 协作插件
+      </div>
+      <p>作者本人开发的 Team 模式：队长创建任务，协调多名成员干活，支持队员间通信。基于 Harness + DSRV-4 Flash 实现。</p>
+    </div>
+  </div>
+
+  <!-- 对开发者的启发 -->
+  <div class="card">
+    <div class="section-title">对开发者的启发</div>
+    <div class="insight-box insight-green">
+      <div class="insight-title">方便集成一切插件</div>
+      <p>内测群里插件开发活跃度极高，有人通宵开发，预计很快会涌现爆款插件。</p>
+    </div>
+    <div class="insight-box insight-yellow">
+      <div class="insight-title">想法比代码更值钱</div>
+      <p>在这波浪潮里，会写代码已不是决定性优势。把好想法快速落地，才是真正的机会。</p>
+    </div>
+  </div>
+
+  <!-- 行动建议 / 后续关注 -->
+  <div class="card">
+    <div class="section-title">行动建议 / 后续关注</div>
+    <div class="action-table">
+      <div class="action-row">
+        <div class="action-left">
+          <span class="action-icon">🔧</span>
+          动手实践
+        </div>
+        <div class="action-right">拿 Skills 包开发插件</div>
+      </div>
+      <div class="action-row">
+        <div class="action-left">
+          <span class="action-icon">📦</span>
+          作者项目
+        </div>
+        <div class="action-right">CC-Haha 桌面端优化中</div>
+      </div>
+      <div class="action-row">
+        <div class="action-left">
+          <span class="action-icon">🔄</span>
+          后续动向
+        </div>
+        <div class="action-right">考虑开源 Harness 插件</div>
+      </div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">给读者的线索</div>
+      <p>保持关注社区插件发布节奏，趁爆发期前尽早体验和参与共建。有想法的话，直接用 Skills 包交给 Agent 去实现。</p>
+    </div>
+  </div>
+
+  <!-- 结尾总结 -->
+  <div class="card">
+    <div class="section-title">结尾总结</div>
+    <p class="closing-text">
+      DeepSeek Harness 从体感上「非常丝滑」，优秀的架构设计吸引全球开发者共建。它不是「最强 Agent」的唯一答案，但绝对是当下最具生态潜力的 AI 工具框架之一。对所有人来说，这都是一个值得研究和下注的机会窗口。
+    </p>
+    <div class="closing-author">—— 测评：tong </div>
+  </div>
+
+  <!-- 页脚 -->
+  <div class="footer">
+    <p>以上为全文要点整理 · 仅供学习参考</p>
+  </div>
+
+</div>
+
+</body>
+</html>
