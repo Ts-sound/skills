@@ -1,0 +1,59 @@
+# md2talk-video default configuration.
+#
+# Every external tool is invoked through a command template rendered with
+# placeholders. Placeholders available per section:
+#
+#   tts.edge_tts   {voice} {rate} {text_file} {out_wav} {raw_srt}
+#   tts.audiocpp   {bin} {model} {ref_audio} {text_file} {out_wav}
+#   ppt            {page_json} {out_html} {theme} {title} {python} {skill}
+#   render         {html} {out_mp4} {duration} {fps} {width} {height} {python} {skill} {ffmpeg}
+#
+# Bare names are looked up on PATH. Relative paths are resolved against the
+# skill directory first, then the workspace.
+#
+# ppt/render default to the bundled fallbacks (pure Python + headless browser),
+# because "ppt-master" and "hyperframes" are not CLIs you can assume are on
+# PATH: ppt-master is an agent skill workflow. To use a real external tool,
+# replace the cmd below; the rest of the pipeline does not care.
+
+tts:
+  backend: edge-tts
+  edge_tts:
+    cmd: "edge-tts --voice {voice} --rate {rate} -f {text_file} --write-media {out_wav} --write-subtitles {raw_srt}"
+    voice: zh-CN-XiaoxiaoNeural
+    rate: "+0%"
+    install_hint: "pip install edge-tts   (or: uv tool install edge-tts)"
+  audiocpp:
+    cmd: "{bin} -m {model} --ref {ref_audio} -t {text_file} -o {out_wav}"
+    bin: tools/audiocpp
+    model: models/index-tts2-q8_0.gguf
+    ref_audio: voices/ref.wav
+    install_hint: "put the audiocpp binary at <skill>/tools/audiocpp, model at <skill>/models/index-tts2-q8_0.gguf, reference voice at <skill>/voices/ref.wav"
+
+ppt:
+  # builtin   : bundled minimal HTML slide generator (chapter + title + bullets, kind-aware)
+  # ppt-master: wrap the SVG pages exported by the ppt-master workflow (--svg-dir)
+  provider: builtin
+  svg_dir: ""
+  # Bundled minimal HTML slide generator (chapter + title + outline bullets).
+  # External alternative:
+  #   cmd: "ppt-master --in {page_json} --out {out_html} --theme {theme} --title {title}"
+  cmd: "{python} {skill}/scripts/builtin_ppt.py --in {page_json} --out {out_html} --theme {theme} --title {title}"
+  theme: assets/theme/default
+  install_hint: "the bundled generator needs nothing; to use another tool, point ppt.cmd at a CLI that accepts the same placeholders"
+
+render:
+  # Bundled renderer: headless Edge/Chrome screenshot, then a still-image encode.
+  # External alternative:
+  #   cmd: "hyperframes render {html} -o {out_mp4} --duration {duration} --fps {fps}"
+  cmd: "{python} {skill}/scripts/builtin_render.py --html {html} --out {out_mp4} --duration {duration} --fps {fps} --width {width} --height {height} --ffmpeg {ffmpeg}"
+  fps: 30
+  # Output raster size. The slide canvas stays 1280x720; SVG/HTML scale to fit.
+  width: 1920
+  height: 1080
+  install_hint: "the bundled renderer needs Edge/Chrome (or set MD2TALK_BROWSER); install hyperframes and point render.cmd at it for motion graphics"
+
+compose:
+  ffmpeg: ffmpeg
+  ffprobe: ffprobe
+  burn_subtitles: false

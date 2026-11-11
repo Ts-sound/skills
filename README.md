@@ -76,7 +76,7 @@ python3 scripts/maintain_csv.py list-sources
 
 | 目录 | 说明 |
 |------|------|
-| `skills/` | opencode 扫描目录（按分类组织，当前 4 个分类 14 个 skill） |
+| `skills/` | opencode 扫描目录（按分类组织，当前 4 个分类 16 个 skill） |
 | `sources/` | 第三方 git submodule 缓存 |
 | `data/` | CSV 元数据（脚本维护） |
 | `scripts/` | 自动化脚本 |
@@ -95,7 +95,7 @@ python3 scripts/maintain_csv.py list-sources
 
 ## 已引入 Skills
 
-共 14 个，分布在 4 个分类（以 `skills/` 目录实际内容为准，插件会自动扫描并注入说明）。
+共 16 个，分布在 4 个分类（以 `skills/` 目录实际内容为准，插件会自动扫描并注入说明）。
 
 | Skill | 分类 | 来源 |
 |-------|------|------|
@@ -112,6 +112,7 @@ python3 scripts/maintain_csv.py list-sources
 | handoff | productivity | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | humanizer-zh | productivity | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) |
 | kbase | productivity | 本地编写 |
+| md2talk-video | productivity | 本地编写 |
 | to-issues | project-mgmt | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | triage | project-mgmt | [mattpocock/skills](https://github.com/mattpocock/skills) |
 
