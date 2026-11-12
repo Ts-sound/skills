@@ -44,10 +44,11 @@ def main():
                 new.append(name)
             else:
                 # Check if content differs
-                src_file = source / "skills" / s["dir_name"] / "SKILL.md"
+                src_file = source / s["source_path"] / "SKILL.md"
                 dst_file = SKILLS_DIR / installed[name] / name / "SKILL.md"
                 if src_file.exists() and dst_file.exists():
-                    if src_file.read_text() != dst_file.read_text():
+                    if (src_file.read_text(encoding="utf-8", errors="replace")
+                            != dst_file.read_text(encoding="utf-8", errors="replace")):
                         modified.append(name)
 
         if new:

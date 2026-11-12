@@ -5,7 +5,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib import ensure_dirs, read_csv, SUB_REPO_CSV, SUB_REPO_FIELDS, get_current_commit, get_branch, pull_submodule, add_repo_csv
+from lib import (ensure_dirs, read_csv, SUB_REPO_CSV, SUB_REPO_FIELDS,
+                 get_current_commit, get_branch, is_git_repo, pull_submodule, add_repo_csv)
 from datetime import date
 
 
@@ -18,6 +19,7 @@ def main():
         return 1
 
     updated = []
+    skipped = []
     for repo in repos:
         if repo.get("status") != "active":
             continue
@@ -27,10 +29,21 @@ def main():
 
         if not source_path.exists():
             print(f"Missing: {source_path}")
+            skipped.append(repo_name)
+            continue
+
+        if not is_git_repo(source_path):
+            print(f"Not initialized: {source_path} (run: git submodule update --init)")
+            skipped.append(repo_name)
             continue
 
         old_commit = get_current_commit(source_path)
-        has_update = pull_submodule(source_path)
+        try:
+            has_update = pull_submodule(source_path, repo.get("branch") or "main")
+        except RuntimeError as e:
+            print(f"Failed: {repo_name}: {e}")
+            skipped.append(repo_name)
+            continue
         new_commit = get_current_commit(source_path)
         branch = get_branch(source_path)
 
@@ -44,6 +57,9 @@ def main():
 
     if updated:
         print(f"\n{len(updated)} repos updated. Run diff.py to analyze changes.")
+    elif skipped:
+        print(f"\n{len(skipped)} repos skipped (missing/not initialized/error).")
+        return 1
     else:
         print("\nAll repos up-to-date.")
 

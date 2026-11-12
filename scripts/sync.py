@@ -6,7 +6,8 @@ from pathlib import Path
 from datetime import date
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib import ensure_dirs, read_csv, THIRD_SKILLS_CSV, THIRD_SKILLS_FIELDS, copy_skill, SOURCES_DIR, SKILLS_DIR
+from lib import (ensure_dirs, read_csv, write_csv, THIRD_SKILLS_CSV,
+                 THIRD_SKILLS_FIELDS, copy_skill, SOURCES_DIR, SKILLS_DIR)
 
 
 def main():
@@ -17,6 +18,7 @@ def main():
         print("No skills registered. Import skills first.")
         return 1
 
+    today = date.today().isoformat()
     synced = 0
     for skill in skills:
         source_repo = skill.get("source_repo", "")
@@ -28,23 +30,26 @@ def main():
             print(f"Warning: Source '{source_repo}' not found for skill '{skill_name}'")
             continue
 
-        # Check if skill exists in source
-        src_skill = source_path / "skills" / skill_name
-        if not src_skill.exists():
-            print(f"Warning: Skill '{skill_name}' not found in source '{source_repo}'")
+        # source_path in CSV is relative to the source repo root
+        rel_path = skill.get("source_path") or f"skills/{skill_name}"
+        src_skill = source_path / rel_path
+        if not src_skill.is_dir():
+            print(f"Warning: Skill '{skill_name}' not found at '{rel_path}' in '{source_repo}'")
             continue
 
         dst_skill = SKILLS_DIR / category / skill_name
         old_exists = dst_skill.exists()
 
-        copy_skill(source_path, skill_name, category)
+        copy_skill(source_path, rel_path, category)
         synced += 1
+        skill["last_sync"] = today
 
         if old_exists:
             print(f"Updated: {skill_name} ({category})")
         else:
             print(f"New: {skill_name} -> {category}/")
 
+    write_csv(THIRD_SKILLS_CSV, skills, THIRD_SKILLS_FIELDS)
     print(f"\n{synced} skills synced.")
     return 0
 

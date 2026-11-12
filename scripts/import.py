@@ -111,7 +111,7 @@ def main():
             print(f"Warning: Skill path '{actual_path}' not found in source '{source_name}'")
             continue
 
-        add_skill_csv(skill["name"], skill["category"], source_name, actual_path)
+        add_skill_csv(skill["name"], skill["category"], source_repo.name, actual_path)
         copy_skill(source_repo, actual_path, skill["category"])
         print(f"Imported: {skill['name']} -> skills/{skill['category']}/")
 

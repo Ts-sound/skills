@@ -94,7 +94,16 @@ def add_skill_csv(skill_name: str, category: str, source_repo: str, source_path:
 def git(*args: str, cwd: Optional[Path] = None) -> str:
     """Run a git command and return stdout."""
     cmd = ["git"] + list(args)
-    result = subprocess.run(cmd, capture_output=True, text=True, cwd=cwd or ROOT)
+    result = subprocess.run(cmd, capture_output=True, text=True,
+                            encoding="utf-8", errors="replace", cwd=cwd or ROOT)
+    if result.returncode != 0:
+        # Windows schannel sometimes cannot use the credential/cert store
+        # (SEC_E_NO_CREDENTIALS); retry with the OpenSSL backend.
+        if "SEC_E_NO_CREDENTIALS" in (result.stderr or ""):
+            result = subprocess.run(
+                ["git", "-c", "http.sslBackend=openssl"] + list(args),
+                capture_output=True, text=True,
+                encoding="utf-8", errors="replace", cwd=cwd or ROOT)
     if result.returncode != 0:
         raise RuntimeError(f"git {' '.join(args)} failed: {result.stderr.strip()}")
     return result.stdout.strip()
@@ -109,6 +118,17 @@ def git_clone_submodule(url: str, rel_path: str) -> tuple:
     return repo_name, commit
 
 
+def is_git_repo(path: Path) -> bool:
+    """True only when path itself is a git work tree (not the parent repo)."""
+    if not path.is_dir():
+        return False
+    try:
+        top = git("rev-parse", "--show-toplevel", cwd=path)
+    except RuntimeError:
+        return False
+    return Path(top).resolve() == path.resolve()
+
+
 def get_current_commit(path: Path) -> str:
     """Get short commit hash for a submodule."""
     return git("rev-parse", "HEAD", cwd=path)[:8]
@@ -119,12 +139,23 @@ def get_branch(path: Path) -> str:
     return git("rev-parse", "--abbrev-ref", "HEAD", cwd=path)
 
 
-def pull_submodule(path: Path) -> bool:
-    """Pull updates for a submodule. Returns True if updated."""
+def pull_submodule(path: Path, branch: Optional[str] = None) -> bool:
+    """Fetch + fast-forward a submodule. Returns True if commit changed.
+
+    Uses the recorded branch so detached-HEAD submodules still update.
+    """
+    if not is_git_repo(path):
+        raise RuntimeError(f"not a git repo (submodule not initialized): {path}")
+    branch = branch or get_branch(path)
+    if branch == "HEAD":  # detached; fall back to origin/HEAD
+        branch = git("rev-parse", "--abbrev-ref", "origin/HEAD", cwd=path).split("/", 1)[1]
     old_commit = get_current_commit(path)
-    git("pull", cwd=path)
-    new_commit = get_current_commit(path)
-    return old_commit != new_commit
+    git("fetch", "origin", branch, cwd=path)
+    new_commit = git("rev-parse", f"origin/{branch}", cwd=path)[:8]
+    if new_commit == old_commit:
+        return False
+    git("checkout", "-B", branch, f"origin/{branch}", cwd=path)
+    return get_current_commit(path) != old_commit
 
 
 # --- Skill analysis ---
@@ -168,14 +199,20 @@ def parse_skill_md(path: Path) -> Dict:
 
 def copy_skill(source_dir: Path, source_path: str, category: str):
     """Copy a skill from source to skills/<category>/."""
+    import shutil
+
     src = source_dir / source_path
     if source_path == ".":
         skill_name = source_dir.name
     else:
         skill_name = src.name
     dst = SKILLS_DIR / category / skill_name
+
+    def _force_remove(func, path, exc):
+        # Windows: read-only files (e.g. .git objects) block deletion.
+        os.chmod(path, 0o777)
+        func(path)
+
     if dst.exists():
-        import shutil
-        shutil.rmtree(dst)
-    import shutil
-    shutil.copytree(src, dst)
+        shutil.rmtree(dst, onexc=_force_remove)
+    shutil.copytree(src, dst, ignore=shutil.ignore_patterns(".git", "node_modules"))
