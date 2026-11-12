@@ -20,16 +20,17 @@
 │   ├── sub-repo.csv  # 源仓库清单：repo_name, repo_url, branch, last_commit, added_date, status
 │   └── 3rd-skills.csv# 已引入 skill：skill_name, category, source_repo, source_path, imported_date, modified, last_sync, priority
 ├── scripts/
-│   ├── lib/          # 公共函数（git、CSV、复制）
-│   ├── add_source.py
-│   ├── analyze.py
-│   ├── import.py
-│   ├── update.py
-│   ├── diff.py
-│   ├── sync.py
-│   ├── maintain_csv.py
-│   ├── install-claude.sh / install-opencode.sh
-│   └── add-caveman-hook.py
+│   ├── lib/                  # 公共函数（git、CSV、复制）
+│   ├── add_source.py         # 添加源：克隆到 sources/ 并生成报告
+│   ├── analyze.py            # 扫描源仓库，生成 6 列候选 skill 报告
+│   ├── import.py             # 按报告 ✅ 引入 skill 并登记 CSV
+│   ├── update.py             # fetch 源仓库，更新 last_commit
+│   ├── diff.py               # 比较源与已安装 skill 的差异
+│   ├── sync.py               # 按 CSV 复制到 skills/ 并写 last_sync
+│   ├── maintain_csv.py       # 查询/删除/移动 skill 与源仓库
+│   ├── install-claude.sh     # 链接 skills 到 Claude Code
+│   ├── install-opencode.sh   # 安装为 OpenCode 插件
+│   └── add-caveman-hook.py   # 写入 Claude Code 启动钩子（自动激活 caveman）
 └── docs/
     ├── design/       # 设计文档
     ├── requirements.md
