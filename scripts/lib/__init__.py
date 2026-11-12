@@ -24,7 +24,7 @@ THIRD_SKILLS_FIELDS = [
     "imported_date", "modified", "last_sync", "priority"
 ]
 
-VALID_CATEGORIES = {"core", "engineering", "planning", "productivity", "project-mgmt", "learning"}
+VALID_CATEGORIES = {"core", "engineering", "planning", "productivity", "project-mgmt", "knowledge"}
 
 
 def ensure_dirs():

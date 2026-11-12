@@ -44,7 +44,7 @@ graph TB
 | planning | 需求分析、方案设计 | `skills/planning/` | brainstorming, writing-plans |
 | productivity | 效率提升 | `skills/productivity/` | dispatching-parallel-agents |
 | project-mgmt | 项目流程管理 | `skills/project-mgmt/` | project-workflow, project-ci-cd |
-| learning | 知识沉淀、上下文构建 | `skills/learning/` | mcu-project-organizer, mcu-qa-assistant |
+| knowledge | 知识沉淀、知识库维护 | `skills/knowledge/` | kbase, gen-practice-notes |
 
 ### Skill 目录结构
 

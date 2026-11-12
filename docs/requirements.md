@@ -12,7 +12,7 @@
 - 目录结构创建（skills/ 6个分类子目录、sources/、data/、docs/reports/）
 - 文档体系建立（README.md、AGENTS.md、docs/design/、docs/requirements.md、docs/decisions.md）
 - 数据文件创建（data/sub-repo.csv、data/3rd-skills.csv）
-- 分类体系定义（core、engineering、planning、productivity、project-mgmt、learning）
+- 分类体系定义（core、engineering、planning、productivity、project-mgmt、knowledge）
 - Skills 管理流程规范（添加源、调研、引入、更新）
 - 第三方 skills 的实际拉取和调研（后续任务）
 - 自动化同步脚本编写（scripts/，后续任务）
@@ -24,7 +24,7 @@
 ### 功能需求
 
 #### F1: 目录结构管理
-- 创建 `skills/` 分类子目录（core、engineering、planning、productivity、project-mgmt、learning）
+- 创建 `skills/` 分类子目录（core、engineering、planning、productivity、project-mgmt、knowledge）
 - 创建 `sources/` 作为第三方源码缓存
 - 创建 `data/` 存放脚本维护的 CSV 数据
 - 创建 `docs/reports/` 存放调研报告
@@ -155,7 +155,7 @@
 │   │   └── <skill-name>/SKILL.md
 │   ├── project-mgmt/                   # 项目流程管理
 │   │   └── <skill-name>/SKILL.md
-│   └── learning/                       # 知识沉淀、上下文构建
+│   └── knowledge/                      # 知识沉淀、知识库维护
 │       └── <skill-name>/SKILL.md
 │
 ├── sources/                            # 第三方 git submodule 缓存
@@ -188,7 +188,7 @@
 | planning | 需求分析、方案设计 | skills/planning/ |
 | productivity | 效率提升 | skills/productivity/ |
 | project-mgmt | 项目流程管理 | skills/project-mgmt/ |
-| learning | 知识沉淀、上下文构建 | skills/learning/ |
+| knowledge | 知识沉淀、知识库维护 | skills/knowledge/ |
 
 ### 工作流
 

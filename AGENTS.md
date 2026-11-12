@@ -8,13 +8,13 @@
 
 ```
 /
-├── skills/           # 客户端扫描目录（6 个分类，当前 4 个分类在用）
+├── skills/           # 客户端扫描目录（6 个分类，当前 5 个分类在用）
 │   ├── core/
 │   ├── engineering/
 │   ├── planning/     # 空
 │   ├── productivity/
 │   ├── project-mgmt/
-│   └── learning/     # 空
+│   └── knowledge/    # 知识沉淀与知识库维护
 ├── sources/          # 第三方 git submodule 缓存（只读，不手动修改）
 ├── data/
 │   ├── sub-repo.csv  # 源仓库清单：repo_name, repo_url, branch, last_commit, added_date, status
@@ -107,9 +107,10 @@ cmd /c mklink /J "$env:USERPROFILE\.agents\skills\skills-tong" "$env:USERPROFILE
 python3 scripts/maintain_csv.py list-skills
 python3 scripts/maintain_csv.py list-sources
 python3 scripts/maintain_csv.py remove-skill <name>
+python3 scripts/maintain_csv.py move-skill <name> <category>
 ```
 
-`remove-skill` 只删除 `skills/<category>/<name>/` 与 `3rd-skills.csv` 对应行，不动 `sources/`。
+`remove-skill` 只删除 `skills/<category>/<name>/` 与 `3rd-skills.csv` 对应行；`move-skill` 移动目录并更新 CSV，本地自研 skill（不在 CSV）也支持。
 
 ## 最佳实践
 
@@ -129,7 +130,7 @@ python3 scripts/maintain_csv.py remove-skill <name>
   - **planning** — 需求分析/方案设计（暂空）
   - **productivity** — 效率提升与文本处理（handoff, humanizer-zh）
   - **project-mgmt** — 项目流程管理（triage, to-tickets）
-  - **learning** — 知识沉淀（暂空）
+  - **knowledge** — 知识沉淀与知识库维护（kbase, gen-practice-notes）
 
 ### 报告规范
 

@@ -88,6 +88,7 @@ python3 scripts/sync.py     # 复制到 skills/
 python3 scripts/maintain_csv.py list-skills
 python3 scripts/maintain_csv.py list-sources
 python3 scripts/maintain_csv.py remove-skill <name>
+python3 scripts/maintain_csv.py move-skill <name> <category>
 ```
 
 报告表格固定 6 列：`| ID | Skill | 描述 | 推荐度 | 分类 | 确认 |`，顺序和格式不能改，否则 `import.py` 无法识别；只有「确认」列为 ✅ 的才会被引入。
@@ -96,7 +97,7 @@ python3 scripts/maintain_csv.py remove-skill <name>
 
 | 目录 | 说明 |
 |------|------|
-| `skills/` | 客户端扫描目录（按分类组织，当前 4 个分类 16 个 skill） |
+| `skills/` | 客户端扫描目录（按分类组织，当前 5 个分类 16 个 skill） |
 | `sources/` | 第三方 git submodule 缓存 |
 | `data/` | CSV 元数据（脚本维护） |
 | `scripts/` | 自动化脚本 |
@@ -111,11 +112,11 @@ python3 scripts/maintain_csv.py remove-skill <name>
 | planning | 需求分析/方案设计 |
 | productivity | 效率提升 |
 | project-mgmt | 项目流程管理 |
-| learning | 知识沉淀 |
+| knowledge | 知识沉淀与知识库维护 |
 
 ## 已引入 Skills
 
-共 16 个，分布在 4 个分类（以 `skills/` 目录实际内容为准，插件会自动扫描并注入说明）。
+共 16 个，分布在 5 个分类（以 `skills/` 目录实际内容为准，插件会自动扫描并注入说明）。
 
 | Skill | 分类 | 来源 |
 |-------|------|------|
@@ -128,12 +129,12 @@ python3 scripts/maintain_csv.py remove-skill <name>
 | grill-me | engineering | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | grill-with-docs | engineering | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | caveman | productivity | 本地保留副本（源仓库已移除该目录） |
-| gen-practice-notes | productivity | 本地编写 |
+| gen-practice-notes | knowledge | 本地编写 |
 | handoff | productivity | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | humanizer-zh | productivity | [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh) |
-| kbase | productivity | 本地编写 |
+| kbase | knowledge | 本地编写 |
 | md2talk-video | productivity | 本地编写 |
 | to-tickets | project-mgmt | [mattpocock/skills](https://github.com/mattpocock/skills) |
 | triage | project-mgmt | [mattpocock/skills](https://github.com/mattpocock/skills) |
 
-> `planning/`、`learning/` 分类暂未引入 skill；`caveman` 因上游删除目录，已转为本地维护，`sync.py` 对其报 warning 属预期。
+> `planning/` 分类暂未引入 skill；`caveman` 因上游删除目录，已转为本地维护，`sync.py` 对其报 warning 属预期。

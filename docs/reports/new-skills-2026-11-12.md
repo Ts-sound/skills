@@ -14,7 +14,7 @@ python scripts/import.py docs/reports/new-skills-2026-11-12.md
 
 | ID | Skill | 描述 | 推荐度 | 分类 | 确认 |
 |----|-------|------|--------|------|------|
-| 1 | academy-guide | Claude Academy 课程/教程推荐，回答「怎么用 Claude」类问题 | 2 | learning | |
+| 1 | academy-guide | Claude Academy 课程/教程推荐，回答「怎么用 Claude」类问题 | 2 | knowledge | |
 | 2 | algorithmic-art | p5.js 生成艺术（种子随机、参数交互） | 2 | productivity | |
 | 3 | brand-guidelines | 套用 Anthropic 品牌色/字体到 artifact | 2 | productivity | |
 | 4 | canvas-design | 用设计理念产出 PNG/PDF 视觉作品，含 83 个资源（5.5MB） | 3 | productivity | |
@@ -59,15 +59,15 @@ python scripts/import.py docs/reports/new-skills-2026-11-12.md
 | 38 | loop-me | grill 工作流 spec（仓内自用） | 1 | planning | |
 | 39 | setup-ts-deep-modules | 用 dependency-cruiser 把 TS 包约束成深模块 | 2 | engineering | |
 | 40 | software-factory | 设计 software factory 的共用语言 | 2 | planning | |
-| 41 | writing-beats | 写作：把素材编成 beat 行程 | 2 | learning | |
-| 42 | writing-fragments | 写作：先挖碎片，不立结构 | 2 | learning | |
-| 43 | writing-shape | 写作：把素材逐段塑成文章 | 2 | learning | |
+| 41 | writing-beats | 写作：把素材编成 beat 行程 | 2 | knowledge | |
+| 42 | writing-fragments | 写作：先挖碎片，不立结构 | 2 | knowledge | |
+| 43 | writing-shape | 写作：把素材逐段塑成文章 | 2 | knowledge | |
 | 44 | git-guardrails-claude-code | Claude Code hooks 拦截危险 git 命令 | 2 | engineering | |
 | 45 | migrate-to-shoehorn | 测试里的 `as` 断言迁到 shoehorn | 2 | engineering | |
-| 46 | scaffold-exercises | 生成可过 lint 的练习目录（题/解/讲解） | 2 | learning | |
+| 46 | scaffold-exercises | 生成可过 lint 的练习目录（题/解/讲解） | 2 | knowledge | |
 | 47 | setup-pre-commit | 配 Husky + lint-staged + 类型检查 + 测试 | 3 | engineering | |
 | 48 | grilling | 无情追问计划/决策/想法（与已装 grill-me 重叠） | 3 | productivity | |
-| 49 | teach | 在工作区内教学新技能/概念 | 3 | learning | |
+| 49 | teach | 在工作区内教学新技能/概念 | 3 | knowledge | |
 | 50 | to-questionnaire | 把答不了的决策转成他人填写的问卷 | 3 | productivity | |
 | 51 | wait-what | 上条消息没落地，要求重讲（566B 微技能） | 2 | productivity | |
 | 52 | writing-for-agents | 写 agent 文档：SKILL.md / AGENTS.md / CLAUDE.md | 4 | core |✅ |

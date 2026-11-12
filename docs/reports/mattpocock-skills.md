@@ -30,7 +30,7 @@
 | 18 | writing-shape | 将原始 markdown 素材整理为结构化文章 | 2 | productivity | |
 | 19 | git-guardrails-claude-code | 设置 Claude Code 钩子阻止危险的 git 命令 | 3 | engineering | |
 | 20 | migrate-to-shoehorn | 将测试文件从 `as` 断言迁移到 @total-typescript/shoehorn | 2 | engineering | |
-| 21 | scaffold-exercises | 创建练习目录结构（章节/问题/解决方案/说明） | 3 | learning | |
+| 21 | scaffold-exercises | 创建练习目录结构（章节/问题/解决方案/说明） | 3 | knowledge | |
 | 22 | setup-pre-commit | 设置 Husky pre-commit 钩子（lint-staged + Prettier + 类型检查） | 3 | engineering | |
 | 23 | edit-article | 编辑和改进文章，重组段落、提升清晰度 | 2 | productivity | |
 | 24 | obsidian-vault | 管理 Obsidian 笔记库（搜索/创建/wikilink/索引） | 3 | productivity | |

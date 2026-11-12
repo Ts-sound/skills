@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from lib import ensure_dirs, git_clone_submodule, add_repo_csv
 
-CATEGORIES = ["core", "engineering", "planning", "productivity", "project-mgmt", "learning"]
+CATEGORIES = ["core", "engineering", "planning", "productivity", "project-mgmt", "knowledge"]
 
 
 def main():

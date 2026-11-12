@@ -8,7 +8,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from lib import ensure_dirs, add_skill_csv, copy_skill, SOURCES_DIR
 
-VALID_CATEGORIES = {"core", "engineering", "planning", "productivity", "project-mgmt", "learning"}
+VALID_CATEGORIES = {"core", "engineering", "planning", "productivity", "project-mgmt", "knowledge"}
 
 
 def parse_confirmed_report(report_path: Path) -> list:
