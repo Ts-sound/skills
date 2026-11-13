@@ -45,7 +45,7 @@ git pull
 
 ### Windows
 
-Windows 下不用 bash 脚本，直接给全局 skills 目录建一个目录联接（junction），指向仓库根目录。`mklink /J` 不需要管理员权限。
+Windows 下给全局 skills 目录建一个目录联接（junction），**指向仓库内的 `skills/` 子目录**（不是仓库根目录）。`mklink /J` 不需要管理员权限。
 
 ```powershell
 # 1. Clone 仓库（Git Bash 或 PowerShell 均可）
@@ -53,18 +53,24 @@ git clone https://github.com/Ts-sound/skills.git "$env:USERPROFILE\skills-repo"
 cd "$env:USERPROFILE\skills-repo"
 git submodule update --init --recursive
 
-# 2. 建目录联接。目标形如 C:\Users\<用户名>\.agents\skills\skills-tong
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills" | Out-Null
-cmd /c mklink /J "$env:USERPROFILE\.agents\skills\skills-tong" "$env:USERPROFILE\skills-repo"
+# 2. 安装目录联接：<仓库>\skills -> ~\.agents\skills\skills-tong
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\install-agents.ps1
 
 # 3. 更新本仓库（junction 自动跟随，无需重链）
 cd "$env:USERPROFILE\skills-repo"; git pull
 ```
 
+等效的手动命令：
+
+```powershell
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills" | Out-Null
+cmd /c mklink /J "$env:USERPROFILE\.agents\skills\skills-tong" "$env:USERPROFILE\skills-repo\skills"
+```
+
+- 联接目标是 `<仓库>\skills`，客户端即按 `skills-tong/<category>/<name>/SKILL.md` 扫到各 skill；指向仓库根会多一层、并把 `sources/`、`docs/` 一并暴露
 - 目标路径按客户端约定替换，例如 `C:\Users\17853\.agents\skills\skills-tong`
-- 仓库保留 `skills/<category>/<name>/SKILL.md` 层级，递归扫描由客户端负责；一个联接指仓库根即可，不需要为每个 skill 单独建联接
 - 符号链接 `New-Item -ItemType SymbolicLink` 需管理员或开启开发者模式，目录联接不需要
-- 删除联接用 `cmd /c rmdir "<路径>"`，不要用 `del`，也不会删到仓库内容
+- 删除联接：`powershell -File scripts\install-agents.ps1 -Unlink`（或 `cmd /c rmdir "<路径>"`），不要用 `del`，不会删到仓库内容
 - 若 git 报 `SEC_E_NO_CREDENTIALS`，执行 `git config --global http.sslBackend openssl` 后重试
 
 ## 维护管理

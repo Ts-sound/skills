@@ -30,6 +30,7 @@
 │   ├── maintain_csv.py       # 查询/删除/移动 skill 与源仓库
 │   ├── install-claude.sh     # 链接 skills 到 Claude Code
 │   ├── install-opencode.sh   # 安装为 OpenCode 插件
+│   ├── install-agents.ps1    # Windows：将 skills/ 联接为 ~/.agents/skills/skills-tong
 │   └── add-caveman-hook.py   # 写入 Claude Code 启动钩子（自动激活 caveman）
 └── docs/
     ├── design/       # 设计文档
@@ -62,9 +63,10 @@ git clone <this-repo> "$env:USERPROFILE\skills-repo"
 cd "$env:USERPROFILE\skills-repo"
 git submodule update --init --recursive
 
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.agents\skills" | Out-Null
-cmd /c mklink /J "$env:USERPROFILE\.agents\skills\skills-tong" "$env:USERPROFILE\skills-repo"
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\install-agents.ps1
 ```
+
+脚本建 `<仓库>\skills` -> `%USERPROFILE%\.agents\skills\skills-tong` 的目录联接；挂载点必须是仓库的 `skills/` 子目录，不是仓库根目录。卸载加 `-Unlink`。
 
 更新只需 `git pull`，联接自动跟随；源仓库内容用 `scripts/update.py` 拉取。目标路径按客户端约定调整，如 `C:\Users\17853\.agents\skills\skills-tong`。
 
